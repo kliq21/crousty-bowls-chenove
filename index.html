@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crousty Bowls 🔥 L'original de Chenôve</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🍱%3C/text%3E%3C/svg%3E">
+<meta name="description" content="Le crousty bowl qui a converti Chenôve. Riz, poulet pané ULTRA croustillant, sauce maison. Halal. 68 Rue Maxime Guillot.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<style>
+:root {
+  --yellow: #FFD83D;
+  --yellow-deep: #F4B400;
+  --cream: #FFF7D6;
+  --red: #E63946;
+  --red-deep: #C42939;
+  --ink: #0F0F0F;
+  --black: #000;
+  --shadow: 6px 6px 0 0 var(--ink);
+  --shadow-sm: 4px 4px 0 0 var(--ink);
+  --shadow-lg: 10px 10px 0 0 var(--ink);
+}
+* { -webkit-font-smoothing: antialiased; }
+html, body {
+  background: var(--yellow);
+  color: var(--ink);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 500;
+  overflow-x: hidden;
+}
+.font-display { font-family: 'Archivo Black', sans-serif; letter-spacing: -0.02em; line-height: 0.9; }
+.font-grotesk { font-family: 'Space Grotesk', sans-serif; }
+
+.bg-yellow { background: var(--yellow); }
+.bg-yellow-deep { background: var(--yellow-deep); }
+.bg-cream { background: var(--cream); }
+.bg-red { background: var(--red); }
+.bg-ink { background: var(--ink); }
+.text-red { color: var(--red); }
+.text-ink { color: var(--ink); }
+.text-cream { color: var(--cream); }
+.text-yellow { color: var(--yellow); }
+.border-ink { border-color: var(--ink); }
+
+/* Neo-brutalism box */
+.brutal {
+  border: 3px solid var(--ink);
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.brutal-lg {
+  border: 4px solid var(--ink);
+  box-shadow: var(--shadow-lg);
+}
+.brutal-sm {
+  border: 2px solid var(--ink);
+  box-shadow: var(--shadow-sm);
+}
+.brutal-hover:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 9px 9px 0 0 var(--ink);
+}
+.brutal-press:active {
+  transform: translate(3px, 3px);
+  box-shadow: 2px 2px 0 0 var(--ink);
+}
+
+/* Sticker rotated cards */
+.sticker { transform: rotate(-2deg); transition: transform 0.3s ease; }
+.sticker:hover { transform: rotate(0deg) scale(1.03); }
+.sticker-r { transform: rotate(2deg); }
+.sticker-r:hover { transform: rotate(0deg) scale(1.03); }
+
+/* Wiggle animation */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+.wiggle { animation: wiggle 2s ease-in-out infinite; display: inline-block; }
+
+/* Bounce */
+@keyframes bounce-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.bounce { animation: bounce-soft 2.5s ease-in-out infinite; display: inline-block; }
+
+/* Marquee */
+.marquee {
+  display: flex;
+  animation: marquee 25s linear infinite;
+  white-space: nowrap;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* 3D bowl container with sticker frame */
+#hero-canvas {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, var(--cream) 0%, var(--yellow) 70%);
+}
+#hero-canvas canvas { display: block; width: 100% !important; height: 100% !important; }
+
+/* Reveal */
+.reveal { opacity: 0; transform: translateY(40px) rotate(0deg); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal.visible { opacity: 1; transform: translateY(0) rotate(0deg); }
+.reveal.r-left { transform: translateY(40px) rotate(-5deg); }
+.reveal.r-left.visible { transform: translateY(0) rotate(-2deg); }
+.reveal.r-right { transform: translateY(40px) rotate(5deg); }
+.reveal.r-right.visible { transform: translateY(0) rotate(2deg); }
+
+/* Headline word reveal */
+.word-reveal { display: inline-block; overflow: hidden; vertical-align: bottom; }
+.word-reveal span {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.word-reveal.in span { transform: translateY(0); }
+
+/* Underline scribble */
+.scribble {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12'%3E%3Cpath d='M2 6 Q50 2 100 7 T198 5' stroke='%23E63946' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 0.5em;
+  padding-bottom: 0.1em;
+}
+
+/* Tape decoration */
+.tape::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-3deg);
+  width: 80px;
+  height: 24px;
+  background: var(--red);
+  border: 2px solid var(--ink);
+  opacity: 0.9;
+}
+
+/* Big number stroke */
+.stroke-num {
+  -webkit-text-stroke: 3px var(--ink);
+  color: transparent;
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="sticky top-0 z-50 bg-yellow border-b-[3px] border-ink px-5 md:px-10 py-3 flex items-center justify-between">
+  <a href="#" class="font-display text-2xl md:text-3xl">
+    CROUSTY<span class="text-red">.</span>BOWLS
+  </a>
+  <ul class="hidden md:flex items-center gap-7 text-sm font-bold uppercase">
+    <li><a href="#menu" class="hover:text-red transition">Menu</a></li>
+    <li><a href="#story" class="hover:text-red transition">Le concept</a></li>
+    <li><a href="#location" class="hover:text-red transition">Nous trouver</a></li>
+  </ul>
+  <a href="#order" class="brutal brutal-hover brutal-press bg-red text-cream px-5 py-2.5 font-bold uppercase text-sm">
+    Commander 🔥
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="relative min-h-[90vh] py-12 md:py-16 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-5 md:px-10 grid md:grid-cols-2 gap-8 items-center">
+
+    <div class="relative min-w-0">
+      <!-- Top sticker badge -->
+      <div class="inline-block brutal-sm bg-cream px-3 py-1.5 mb-6 font-bold text-xs uppercase reveal r-left">
+        <span class="inline-block w-2 h-2 rounded-full bg-red mr-2 animate-pulse"></span>
+        Ouvert · 68 Rue Maxime Guillot, Chenôve
+      </div>
+
+      <h1 class="font-display text-[12vw] md:text-[5.2vw] leading-[0.9] mb-6">
+        <div class="word-reveal"><span>LE <span class="text-red">BOWL</span></span></div>
+        <div class="word-reveal"><span>QUI A</span></div>
+        <div class="word-reveal"><span>RETOURNÉ</span></div>
+        <div class="word-reveal"><span class="scribble">CHENÔVE</span> <span class="wiggle inline-block">🔥</span></div>
+      </h1>
+
+      <p class="text-lg font-medium mb-8 max-w-md reveal" style="transition-delay: 0.5s">
+        Riz fondant. Poulet pané <span class="font-bold">ULTRA</span> croustillant.
+        Sauce maison qui rend accro. <span class="font-bold">Le phénomène TikTok</span> est arrivé.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-3 reveal" style="transition-delay: 0.7s">
+        <a href="#order" class="brutal brutal-hover brutal-press bg-red text-cream px-7 py-4 font-bold uppercase inline-flex items-center justify-center gap-2">
+          Je veux mon bowl
+          <span class="text-xl">→</span>
+        </a>
+        <a href="#menu" class="brutal brutal-hover brutal-press bg-cream px-7 py-4 font-bold uppercase inline-flex items-center justify-center gap-2">
+          Voir la carte
+        </a>
+      </div>
+    </div>
+
+    <!-- 3D BOWL with sticker frame -->
+    <div class="relative">
+      <div class="absolute -top-4 -right-4 brutal bg-red text-cream px-4 py-2 font-display text-lg z-20 rotate-6">
+        ★ 4.7
+      </div>
+      <div class="absolute -bottom-4 -left-4 brutal bg-cream px-4 py-2 font-display text-lg z-20 -rotate-6">
+        HALAL ✓
+      </div>
+      <div id="hero-canvas-wrapper" class="brutal-lg bg-cream aspect-square">
+        <div id="hero-canvas"></div>
+        <div id="hero-fallback" class="absolute inset-0 hidden items-center justify-center text-[200px]">🍱</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll cue -->
+  <div class="text-center mt-12 font-bold uppercase text-xs">
+    Scroll <span class="bounce">↓</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<section class="bg-ink text-yellow py-6 border-y-[3px] border-ink overflow-hidden">
+  <div class="marquee font-display text-3xl md:text-5xl">
+    <div class="flex items-center gap-10 px-5 shrink-0">
+      <span>★ 4.7 GOOGLE</span><span class="text-red">●</span>
+      <span>100% HALAL</span><span class="text-red">●</span>
+      <span>LE PHÉNOMÈNE TIKTOK</span><span class="text-red">●</span>
+      <span>LIVRAISON DIJON</span><span class="text-red">●</span>
+      <span>TERRASSE OUVERTE 🔥</span><span class="text-red">●</span>
+    </div>
+    <div class="flex items-center gap-10 px-5 shrink-0">
+      <span>★ 4.7 GOOGLE</span><span class="text-red">●</span>
+      <span>100% HALAL</span><span class="text-red">●</span>
+      <span>LE PHÉNOMÈNE TIKTOK</span><span class="text-red">●</span>
+      <span>LIVRAISON DIJON</span><span class="text-red">●</span>
+      <span>TERRASSE OUVERTE 🔥</span><span class="text-red">●</span>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section id="story" class="py-24 px-5 md:px-10 max-w-6xl mx-auto">
+  <div class="text-center mb-16">
+    <div class="inline-block brutal-sm bg-cream px-3 py-1 mb-6 font-bold text-xs uppercase reveal">01 — Le concept</div>
+    <h2 class="font-display text-5xl md:text-7xl reveal">
+      UNE RECETTE.<br>
+      <span class="text-red">UNE OBSESSION.</span>
+    </h2>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-6">
+    <div class="brutal bg-cream p-6 sticker reveal r-left">
+      <div class="font-display text-6xl stroke-num mb-4">01</div>
+      <div class="text-5xl mb-3">🍚</div>
+      <h3 class="font-display text-2xl mb-2">RIZ QUI RÉCONFORTE</h3>
+      <p class="font-medium">Cuisson minute, vapeur parfaite. La base parfaite.</p>
+    </div>
+    <div class="brutal bg-cream p-6 reveal" style="transition-delay: 0.15s">
+      <div class="font-display text-6xl stroke-num mb-4">02</div>
+      <div class="text-5xl mb-3">🍗</div>
+      <h3 class="font-display text-2xl mb-2">POULET QUI CROUSTILLE</h3>
+      <p class="font-medium">Pané maison, frit à la commande. Le crunch ULTIME.</p>
+    </div>
+    <div class="brutal bg-cream p-6 sticker-r reveal r-right" style="transition-delay: 0.3s">
+      <div class="font-display text-6xl stroke-num mb-4">03</div>
+      <div class="text-5xl mb-3">🥫</div>
+      <h3 class="font-display text-2xl mb-2">SAUCE QUI REND ACCRO</h3>
+      <p class="font-medium">Recette maison secrète. On dira rien. Vous reviendrez.</p>
+    </div>
+  </div>
+</section>
+
+<!-- INGREDIENTS -->
+<section class="py-24 bg-red text-cream border-y-[4px] border-ink">
+  <div class="max-w-6xl mx-auto px-5 md:px-10">
+    <div class="text-center mb-16">
+      <div class="inline-block brutal-sm bg-cream text-ink px-3 py-1 mb-6 font-bold text-xs uppercase reveal">02 — Le rituel</div>
+      <h2 class="font-display text-5xl md:text-7xl reveal">
+        4 INGRÉDIENTS.<br>
+        <span class="text-yellow wiggle inline-block">ZÉRO COMPROMIS.</span>
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-4 gap-5">
+      <div class="brutal bg-yellow text-ink p-6 text-center reveal r-left">
+        <div class="text-6xl mb-3 bounce">🍚</div>
+        <div class="text-xs font-bold uppercase opacity-70 mb-1">01 — Base</div>
+        <h4 class="font-display text-xl">RIZ VAPEUR</h4>
+      </div>
+      <div class="brutal bg-yellow text-ink p-6 text-center reveal" style="transition-delay: 0.1s">
+        <div class="text-6xl mb-3 bounce" style="animation-delay: 0.2s">🍗</div>
+        <div class="text-xs font-bold uppercase opacity-70 mb-1">02 — Star</div>
+        <h4 class="font-display text-xl">POULET PANÉ</h4>
+      </div>
+      <div class="brutal bg-yellow text-ink p-6 text-center reveal" style="transition-delay: 0.2s">
+        <div class="text-6xl mb-3 bounce" style="animation-delay: 0.4s">🧅</div>
+        <div class="text-xs font-bold uppercase opacity-70 mb-1">03 — Crunch</div>
+        <h4 class="font-display text-xl">OIGNONS FRITS</h4>
+      </div>
+      <div class="brutal bg-yellow text-ink p-6 text-center sticker-r reveal r-right" style="transition-delay: 0.3s">
+        <div class="text-6xl mb-3 bounce" style="animation-delay: 0.6s">🥫</div>
+        <div class="text-xs font-bold uppercase opacity-70 mb-1">04 — Secret</div>
+        <h4 class="font-display text-xl">SAUCE MAISON</h4>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu" class="py-24 px-5 md:px-10 max-w-7xl mx-auto">
+  <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+    <div>
+      <div class="inline-block brutal-sm bg-cream px-3 py-1 mb-4 font-bold text-xs uppercase reveal">03 — La carte</div>
+      <h2 class="font-display text-5xl md:text-7xl reveal leading-none">
+        TOUT EST<br>
+        <span class="text-red">DANS LA BOX.</span>
+      </h2>
+    </div>
+    <p class="font-bold uppercase text-sm max-w-xs reveal">Halal · Sur place · Emporter · Livraison Dijon métropole</p>
+  </div>
+
+  <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+    <a href="#order" class="brutal brutal-hover bg-cream p-6 block">
+      <div class="aspect-square bg-yellow brutal-sm mb-5 flex items-center justify-center text-7xl">🍱</div>
+      <div class="inline-block bg-red text-cream px-2 py-0.5 text-xs font-bold uppercase mb-2">L'ORIGINAL</div>
+      <h3 class="font-display text-2xl mb-1">CROUSTY BOWLS</h3>
+      <p class="text-sm font-medium opacity-70 mb-4">Riz, poulet pané, sauce, oignons frits.</p>
+      <div class="font-display text-2xl">9,90 — 11,90 €</div>
+    </a>
+
+    <a href="#order" class="brutal brutal-hover bg-cream p-6 block">
+      <div class="aspect-square bg-red brutal-sm mb-5 flex items-center justify-center text-7xl">🍢</div>
+      <div class="inline-block bg-ink text-yellow px-2 py-0.5 text-xs font-bold uppercase mb-2">DU GRILL</div>
+      <h3 class="font-display text-2xl mb-1">BROCHETTES</h3>
+      <p class="text-sm font-medium opacity-70 mb-4">Grillées minute, marinées maison.</p>
+      <div class="font-display text-2xl">5,90 — 19,90 €</div>
+    </a>
+
+    <a href="#order" class="brutal brutal-hover bg-cream p-6 block">
+      <div class="aspect-square bg-yellow brutal-sm mb-5 flex items-center justify-center text-7xl">🥟</div>
+      <div class="inline-block bg-red text-cream px-2 py-0.5 text-xs font-bold uppercase mb-2">À PARTAGER</div>
+      <h3 class="font-display text-2xl mb-1">NEMS & SAMOSAS</h3>
+      <p class="text-sm font-medium opacity-70 mb-4">Frits, croustillants, à tremper.</p>
+      <div class="font-display text-2xl">3,50 — 9,50 €</div>
+    </a>
+
+    <a href="#order" class="brutal brutal-hover bg-cream p-6 block">
+      <div class="aspect-square bg-red brutal-sm mb-5 flex items-center justify-center text-7xl">🍣</div>
+      <div class="inline-block bg-ink text-yellow px-2 py-0.5 text-xs font-bold uppercase mb-2">FRAIS DU JOUR</div>
+      <h3 class="font-display text-2xl mb-1">SUSHIS</h3>
+      <p class="text-sm font-medium opacity-70 mb-4">Pack de 8 pièces.</p>
+      <div class="font-display text-2xl">9,90 €</div>
+    </a>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section id="location" class="py-24 bg-ink text-cream border-y-[4px] border-ink">
+  <div class="max-w-6xl mx-auto px-5 md:px-10">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <div class="inline-block brutal-sm bg-yellow text-ink px-3 py-1 mb-6 font-bold text-xs uppercase reveal">04 — Nous trouver</div>
+        <h2 class="font-display text-5xl md:text-7xl mb-10 reveal leading-none">
+          ON VOUS<br>
+          <span class="text-yellow">ATTEND.</span>
+        </h2>
+
+        <div class="space-y-5">
+          <div class="brutal bg-yellow text-ink p-5 reveal">
+            <div class="text-xs font-bold uppercase opacity-60 mb-1">📍 Adresse</div>
+            <p class="font-display text-2xl">68 Rue Maxime Guillot<br>21300 Chenôve</p>
+          </div>
+          <div class="brutal bg-cream text-ink p-5 reveal" style="transition-delay: 0.1s">
+            <div class="text-xs font-bold uppercase opacity-60 mb-1">🕐 Horaires</div>
+            <p class="font-display text-xl">Lun — Dim · 11h30 — 23h00</p>
+            <p class="text-xs mt-1 opacity-60">⚠️ Horaires à confirmer avec le gérant</p>
+          </div>
+          <div class="brutal bg-red text-cream p-5 reveal" style="transition-delay: 0.2s">
+            <div class="text-xs font-bold uppercase opacity-80 mb-1">🪑 Sur place</div>
+            <p class="font-display text-xl">Salle · Terrasse · Emporter · Livraison</p>
+          </div>
+        </div>
+
+        <a href="https://maps.google.com/?q=68+Rue+Maxime+Guillot+Chenôve" target="_blank" class="brutal brutal-hover brutal-press bg-yellow text-ink px-6 py-3 font-bold uppercase mt-8 inline-flex items-center gap-2">
+          Itinéraire <span>→</span>
+        </a>
+      </div>
+
+      <div class="brutal-lg bg-cream aspect-square overflow-hidden reveal r-right">
+        <iframe
+          src="https://www.openstreetmap.org/export/embed.html?bbox=5.001,47.276,5.025,47.290&layer=mapnik&marker=47.283,5.013"
+          width="100%" height="100%" style="border:0;"
+          loading="lazy"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER CTA -->
+<section id="order" class="py-24 px-5 md:px-10 bg-yellow">
+  <div class="max-w-5xl mx-auto text-center">
+    <div class="inline-block brutal-sm bg-cream px-3 py-1 mb-6 font-bold text-xs uppercase reveal">05 — Commander</div>
+    <h2 class="font-display text-5xl md:text-8xl mb-6 reveal leading-none">
+      CHOISIS TON<br>
+      <span class="text-red">LIVREUR.</span><span class="wiggle inline-block ml-2">🛵</span>
+    </h2>
+    <p class="font-bold uppercase text-sm mb-12 reveal">Disponible sur les principales plateformes</p>
+
+    <div class="grid sm:grid-cols-3 gap-5 max-w-4xl mx-auto">
+      <a href="#" class="brutal brutal-hover brutal-press bg-cream p-8 block">
+        <div class="font-display text-3xl mb-2">UBER EATS</div>
+        <div class="text-xs font-bold uppercase opacity-60">15-25 min</div>
+      </a>
+      <a href="#" class="brutal brutal-hover brutal-press bg-red text-cream p-8 block">
+        <div class="font-display text-3xl mb-2">DELIVEROO</div>
+        <div class="text-xs font-bold uppercase opacity-80">20-30 min</div>
+      </a>
+      <a href="#" class="brutal brutal-hover brutal-press bg-cream p-8 block">
+        <div class="font-display text-3xl mb-2">JUST EAT</div>
+        <div class="text-xs font-bold uppercase opacity-60">25-35 min</div>
+      </a>
+    </div>
+
+    <div class="mt-12 text-xs opacity-60 italic">⚠️ Plateformes à confirmer avec le gérant</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-ink text-cream py-10 px-5 md:px-10 border-t-[4px] border-ink">
+  <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+    <div>
+      <div class="font-display text-2xl mb-2">CROUSTY<span class="text-red">.</span>BOWLS</div>
+      <p class="text-xs opacity-60">© 2026 Crousty Bowls Chenôve · Tous droits réservés</p>
+    </div>
+    <div class="flex items-center gap-5 text-sm font-bold uppercase">
+      <a href="https://www.instagram.com/crousty_bowls_chenove/" target="_blank" class="hover:text-yellow transition">Instagram</a>
+      <a href="#" class="hover:text-yellow transition">Mentions légales</a>
+      <a href="#" class="hover:text-yellow transition">CGV</a>
+    </div>
+    <div class="text-xs opacity-60">
+      Maquette par <a href="https://kliqweb.fr" target="_blank" class="text-yellow font-bold hover:underline">Kliq</a>
+    </div>
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script type="module">
+let THREE;
+try {
+  THREE = await import('https://unpkg.com/three@0.160.0/build/three.module.js');
+} catch (e) {
+  console.error('Three.js failed to load:', e);
+  document.getElementById('hero-fallback').classList.remove('hidden');
+  document.getElementById('hero-fallback').classList.add('flex');
+  throw e;
+}
+
+// ===== THREE.JS SCENE =====
+const container = document.getElementById('hero-canvas');
+const w = container.clientWidth;
+const h = container.clientHeight;
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 100);
+camera.position.set(0, 4, 7);
+camera.lookAt(0, 0, 0);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setSize(w, h);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+container.appendChild(renderer.domElement);
+
+// Lights (warmer for yellow bg)
+scene.add(new THREE.AmbientLight(0xfff5e0, 0.6));
+const keyLight = new THREE.DirectionalLight(0xfff0c0, 1.8);
+keyLight.position.set(5, 8, 5);
+keyLight.castShadow = true;
+keyLight.shadow.mapSize.set(1024, 1024);
+scene.add(keyLight);
+const rimLight = new THREE.DirectionalLight(0xff5050, 0.6);
+rimLight.position.set(-5, 3, -5);
+scene.add(rimLight);
+const fillLight = new THREE.PointLight(0xffc800, 1.2, 15);
+fillLight.position.set(0, 5, 3);
+scene.add(fillLight);
+
+const bowl = new THREE.Group();
+
+// Container (red bowl this time, more pop)
+const containerMat = new THREE.MeshStandardMaterial({
+  color: 0xE63946, roughness: 0.5, metalness: 0.1
+});
+const containerMesh = new THREE.Mesh(
+  new THREE.CylinderGeometry(2.2, 1.9, 0.8, 32),
+  containerMat
+);
+containerMesh.castShadow = true;
+containerMesh.receiveShadow = true;
+bowl.add(containerMesh);
+
+// Black rim
+const rim = new THREE.Mesh(
+  new THREE.TorusGeometry(2.2, 0.08, 8, 32),
+  new THREE.MeshStandardMaterial({ color: 0x0F0F0F, roughness: 0.5 })
+);
+rim.rotation.x = Math.PI / 2;
+rim.position.y = 0.4;
+bowl.add(rim);
+
+// Rice
+const riceMat = new THREE.MeshStandardMaterial({ color: 0xFFF7D6, roughness: 0.7 });
+for (let i = 0; i < 60; i++) {
+  const r = 0.08 + Math.random() * 0.04;
+  const rice = new THREE.Mesh(new THREE.SphereGeometry(r, 8, 8), riceMat);
+  const angle = Math.random() * Math.PI * 2;
+  const radius = Math.random() * 1.7;
+  rice.position.set(Math.cos(angle) * radius, 0.45 + Math.random() * 0.3, Math.sin(angle) * radius);
+  rice.castShadow = true;
+  bowl.add(rice);
+}
+
+// Chicken (yellow-gold)
+const chickenMat = new THREE.MeshStandardMaterial({ color: 0xF4B400, roughness: 0.7 });
+for (let i = 0; i < 6; i++) {
+  const chicken = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.4, 0.6), chickenMat);
+  const angle = (i / 6) * Math.PI * 2 + Math.random() * 0.5;
+  chicken.position.set(Math.cos(angle) * 1.1, 0.75 + Math.random() * 0.2, Math.sin(angle) * 1.1);
+  chicken.rotation.y = Math.random() * Math.PI;
+  chicken.rotation.x = (Math.random() - 0.5) * 0.3;
+  chicken.castShadow = true;
+  bowl.add(chicken);
+}
+
+// Sauce (white drizzle torusknot)
+const sauce = new THREE.Mesh(
+  new THREE.TorusKnotGeometry(0.8, 0.06, 64, 8, 2, 3),
+  new THREE.MeshStandardMaterial({ color: 0xFFFFFF, roughness: 0.3 })
+);
+sauce.position.y = 1.1;
+sauce.rotation.x = Math.PI / 2;
+sauce.castShadow = true;
+bowl.add(sauce);
+
+// Fried onions
+const onionMat = new THREE.MeshStandardMaterial({ color: 0xFFD83D, roughness: 0.5 });
+for (let i = 0; i < 15; i++) {
+  const onion = new THREE.Mesh(new THREE.TorusGeometry(0.08, 0.03, 6, 8), onionMat);
+  const angle = Math.random() * Math.PI * 2;
+  const radius = Math.random() * 1.6;
+  onion.position.set(Math.cos(angle) * radius, 0.9 + Math.random() * 0.3, Math.sin(angle) * radius);
+  onion.rotation.x = Math.random() * Math.PI;
+  onion.rotation.z = Math.random() * Math.PI;
+  onion.castShadow = true;
+  bowl.add(onion);
+}
+
+bowl.position.set(0, -0.3, 0);
+bowl.scale.set(1.3, 1.3, 1.3);
+scene.add(bowl);
+
+const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+window.addEventListener('mousemove', (e) => {
+  mouse.tx = (e.clientX / window.innerWidth - 0.5) * 0.5;
+  mouse.ty = (e.clientY / window.innerHeight - 0.5) * 0.3;
+});
+
+let time = 0;
+function animate() {
+  requestAnimationFrame(animate);
+  time += 0.005;
+  mouse.x += (mouse.tx - mouse.x) * 0.05;
+  mouse.y += (mouse.ty - mouse.y) * 0.05;
+  bowl.rotation.y = time * 0.4 + mouse.x;
+  bowl.rotation.x = Math.sin(time * 0.5) * 0.05 + mouse.y * 0.3;
+  bowl.position.y = -0.3 + Math.sin(time) * 0.1;
+  sauce.rotation.z = time * 0.8;
+  renderer.render(scene, camera);
+}
+animate();
+
+window.addEventListener('resize', () => {
+  const nw = container.clientWidth;
+  const nh = container.clientHeight;
+  camera.aspect = nw / nh;
+  camera.updateProjectionMatrix();
+  renderer.setSize(nw, nh);
+});
+
+// ===== REVEAL ANIMATIONS =====
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// Hero word reveal on load
+setTimeout(() => {
+  document.querySelectorAll('section:first-of-type .word-reveal').forEach((el, i) => {
+    setTimeout(() => el.classList.add('in'), i * 120);
+  });
+  document.querySelectorAll('section:first-of-type .reveal').forEach((el, i) => {
+    setTimeout(() => el.classList.add('visible'), 200 + i * 100);
+  });
+}, 100);
+</script>
+
+</body>
+</html>
