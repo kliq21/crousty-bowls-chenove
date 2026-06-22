@@ -5,3 +5,6 @@ Site vitrine — maquette de démarchage pour [Crousty Bowls Chenôve](https://w
 Site statique pur (HTML + Three.js + GSAP via CDN). Aucun build, aucune dépendance npm.
 
 **Maquette par [Kliq](https://kliqweb.fr)**.
+
+**Live demo** : https://crousty-bowls-chenove.vercel.app
+
