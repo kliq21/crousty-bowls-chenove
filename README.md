@@ -8,3 +8,5 @@ Site statique pur (HTML + Three.js + GSAP via CDN). Aucun build, aucune dépenda
 
 **Live demo** : https://crousty-bowls-chenove.vercel.app
 
+Stack : HTML statique · Three.js · GSAP · Tailwind (CDN).
+
