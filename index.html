@@ -1,624 +1,1007 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="scroll-smooth">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Crousty Bowls 🔥 L'original de Chenôve</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🍱%3C/text%3E%3C/svg%3E">
-<meta name="description" content="Le crousty bowl qui a converti Chenôve. Riz, poulet pané ULTRA croustillant, sauce maison. Halal. 68 Rue Maxime Guillot.">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crousty Bowls · Chenôve — bowls croustillants, sushis, poutines</title>
+  <meta name="description" content="Crousty Bowls, Chenôve. Riz, tenders, sauce maison qui dégouline. Bowls croustillants, poutines, yakisoba, sushis. Livraison offerte dès 20€ sur Chenôve et autour de Dijon." />
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- favicon : monogramme CB inline -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23D6306E'/%3E%3Cstop offset='1' stop-color='%233B3BB8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='30' fill='url(%23g)'/%3E%3Ctext x='32' y='44' font-family='Arial' font-weight='800' font-style='italic' font-size='32' text-anchor='middle' fill='white'%3ECB%3C/text%3E%3C/svg%3E" />
 
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Open Graph -->
+  <meta property="og:type" content="restaurant.restaurant" />
+  <meta property="og:title" content="Crousty Bowls · Chenôve — le bowl croustillant" />
+  <meta property="og:description" content="Riz, tenders, sauce maison qui dégouline. Bowls, poutines, yakisoba & sushis à Chenôve, aux portes de Dijon. Livraison offerte dès 20€." />
+  <meta property="og:image" content="https://placehold.co/1200x630/0A0A0F/E63946?text=CROUSTY+BOWLS" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:site_name" content="Crousty Bowls Chenôve" />
 
-<style>
-:root {
-  --yellow: #FFD83D;
-  --yellow-deep: #F4B400;
-  --cream: #FFF7D6;
-  --red: #E63946;
-  --red-deep: #C42939;
-  --ink: #0F0F0F;
-  --black: #000;
-  --shadow: 6px 6px 0 0 var(--ink);
-  --shadow-sm: 4px 4px 0 0 var(--ink);
-  --shadow-lg: 10px 10px 0 0 var(--ink);
-}
-* { -webkit-font-smoothing: antialiased; }
-html, body {
-  background: var(--yellow);
-  color: var(--ink);
-  font-family: 'Inter', system-ui, sans-serif;
-  font-weight: 500;
-  overflow-x: hidden;
-}
-.font-display { font-family: 'Archivo Black', sans-serif; letter-spacing: -0.02em; line-height: 0.9; }
-.font-grotesk { font-family: 'Space Grotesk', sans-serif; }
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Crousty Bowls · Chenôve — le bowl croustillant" />
+  <meta name="twitter:description" content="Bowls croustillants, poutines, yakisoba & sushis à Chenôve. Livraison offerte dès 20€." />
+  <meta name="twitter:image" content="https://placehold.co/1200x630/0A0A0F/E63946?text=CROUSTY+BOWLS" />
 
-.bg-yellow { background: var(--yellow); }
-.bg-yellow-deep { background: var(--yellow-deep); }
-.bg-cream { background: var(--cream); }
-.bg-red { background: var(--red); }
-.bg-ink { background: var(--ink); }
-.text-red { color: var(--red); }
-.text-ink { color: var(--ink); }
-.text-cream { color: var(--cream); }
-.text-yellow { color: var(--yellow); }
-.border-ink { border-color: var(--ink); }
+  <!-- Canonical (à mettre à jour avec le domaine final) -->
+  <link rel="canonical" href="https://crousty-bowls-chenove.vercel.app/" />
 
-/* Neo-brutalism box */
-.brutal {
-  border: 3px solid var(--ink);
-  box-shadow: var(--shadow);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-.brutal-lg {
-  border: 4px solid var(--ink);
-  box-shadow: var(--shadow-lg);
-}
-.brutal-sm {
-  border: 2px solid var(--ink);
-  box-shadow: var(--shadow-sm);
-}
-.brutal-hover:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: 9px 9px 0 0 var(--ink);
-}
-.brutal-press:active {
-  transform: translate(3px, 3px);
-  box-shadow: 2px 2px 0 0 var(--ink);
-}
+  <!-- Schema.org Restaurant — SEO + GEO (Google AI Overviews, ChatGPT, Perplexity) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Crousty Bowls",
+    "alternateName": "Crousty Bowls Chenôve",
+    "description": "Street-food croustillante à Chenôve, aux portes de Dijon. Bowls croustillants signature (riz, tenders, sauce maison, oignons crispy), poutines, yakisoba, sushis. Livraison offerte dès 20€.",
+    "image": "https://crousty-bowls-chenove.vercel.app/og.jpg",
+    "url": "https://crousty-bowls-chenove.vercel.app/",
+    "telephone": "+33956657456",
+    "priceRange": "€",
+    "servesCuisine": ["Street food", "Asiatique fusion", "Bowls", "Sushis", "Poutines", "Yakisoba"],
+    "paymentAccepted": ["Cash", "Credit Card"],
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "63 Rue Maxime Guillot",
+      "addressLocality": "Chenôve",
+      "postalCode": "21300",
+      "addressRegion": "Côte-d'Or",
+      "addressCountry": "FR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "47.29733382753947",
+      "longitude": "5.013226238306135"
+    },
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"], "opens": "11:00", "closes": "14:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"], "opens": "18:00", "closes": "22:00" }
+    ],
+    "hasMenu": {
+      "@type": "Menu",
+      "name": "Carte Crousty Bowls",
+      "hasMenuSection": [
+        {
+          "@type": "MenuSection",
+          "name": "Les Crousty",
+          "description": "Bowls croustillants signature : riz, sauce maison, tenders, oignons crispy",
+          "hasMenuItem": [
+            { "@type": "MenuItem", "name": "Crousty Original", "description": "riz, sauce maison, tenders, sauce aigre douce, oignons crispy, persil", "offers": { "@type": "Offer", "price": "9.90", "priceCurrency": "EUR" } },
+            { "@type": "MenuItem", "name": "Crousty Dynamite", "description": "riz, sauce maison, crevette panée, sauce dynamite, oignons crispy, persil", "offers": { "@type": "Offer", "price": "10.90", "priceCurrency": "EUR" } },
+            { "@type": "MenuItem", "name": "Crousty Karaage", "description": "riz, sauce maison, poulet karaage gingembre, oignons crispy, persil", "offers": { "@type": "Offer", "price": "10.90", "priceCurrency": "EUR" } },
+            { "@type": "MenuItem", "name": "Crousty Gratiné", "description": "riz, sauce maison, tenders, sauce aigre douce, mozza, oignons crispy, persil", "offers": { "@type": "Offer", "price": "11.90", "priceCurrency": "EUR" } }
+          ]
+        },
+        {
+          "@type": "MenuSection",
+          "name": "Bowls Poutine",
+          "hasMenuItem": [
+            { "@type": "MenuItem", "name": "French Chicken", "description": "frites, sauce cheddar, tenders, mozza, oignons crispy", "offers": { "@type": "Offer", "price": "9.50", "priceCurrency": "EUR" } },
+            { "@type": "MenuItem", "name": "Karaage Chicken", "description": "frites, sauce cheddar, poulet karaage, mozza, sauce aigre douce", "offers": { "@type": "Offer", "price": "9.50", "priceCurrency": "EUR" } },
+            { "@type": "MenuItem", "name": "Montagnard", "description": "frites, sauce cheddar, lardons, mozza, raclette", "offers": { "@type": "Offer", "price": "9.50", "priceCurrency": "EUR" } },
+            { "@type": "MenuItem", "name": "Chèvre", "description": "frites, sauce cheddar, jambon, mozza, chèvre-miel", "offers": { "@type": "Offer", "price": "9.50", "priceCurrency": "EUR" } }
+          ]
+        },
+        {
+          "@type": "MenuSection",
+          "name": "Sushis",
+          "hasMenuItem": [
+            { "@type": "MenuItem", "name": "Plateau Découverte 18 pièces", "offers": { "@type": "Offer", "price": "19.00", "priceCurrency": "EUR" } },
+            { "@type": "MenuItem", "name": "Plateau Cœur de Gamme 27 pièces", "offers": { "@type": "Offer", "price": "28.00", "priceCurrency": "EUR" } },
+            { "@type": "MenuItem", "name": "Plateau Premium 36 pièces", "offers": { "@type": "Offer", "price": "38.00", "priceCurrency": "EUR" } }
+          ]
+        },
+        {
+          "@type": "MenuSection",
+          "name": "Nouilles Yakisoba",
+          "hasMenuItem": [
+            { "@type": "MenuItem", "name": "Yakisoba", "description": "Nouilles sautées au wok, légumes croquants, au choix : veggie, tenders, crevettes tempura, crevettes dynamite, poulet karaage", "offers": { "@type": "Offer", "price": "9.90", "priceCurrency": "EUR" } }
+          ]
+        }
+      ]
+    },
+    "acceptsReservations": false,
+    "areaServed": [
+      { "@type": "City", "name": "Chenôve" },
+      { "@type": "City", "name": "Dijon" },
+      { "@type": "City", "name": "Marsannay-la-Côte" }
+    ],
+    "sameAs": [
+      "https://www.instagram.com/crousty_bowls_chenove/"
+    ]
+  }
+  </script>
 
-/* Sticker rotated cards */
-.sticker { transform: rotate(-2deg); transition: transform 0.3s ease; }
-.sticker:hover { transform: rotate(0deg) scale(1.03); }
-.sticker-r { transform: rotate(2deg); }
-.sticker-r:hover { transform: rotate(0deg) scale(1.03); }
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet" />
 
-/* Wiggle animation */
-@keyframes wiggle {
-  0%, 100% { transform: rotate(-3deg); }
-  50% { transform: rotate(3deg); }
-}
-.wiggle { animation: wiggle 2s ease-in-out infinite; display: inline-block; }
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          screens: { xs: '420px' },
+          colors: {
+            ink:'#0A0A0F', ink2:'#101019', paper:'#F4F1EA',
+            tomato:'#E63946', magenta:'#D6306E', violet:'#6B3FB4', indigo:'#3B3BB8',
+          },
+          fontFamily: {
+            poster:['Anton','Impact','sans-serif'],
+            sans:['Manrope','system-ui','sans-serif'],
+            hand:['Caveat','cursive'],
+          },
+        },
+      },
+    };
+  </script>
 
-/* Bounce */
-@keyframes bounce-soft {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-.bounce { animation: bounce-soft 2.5s ease-in-out infinite; display: inline-block; }
+  <style>
+    html{ background:#0A0A0F; }
+    body{ background:#0A0A0F; }
+    body{ font-family:'Manrope',system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
 
-/* Marquee */
-.marquee {
-  display: flex;
-  animation: marquee 25s linear infinite;
-  white-space: nowrap;
-}
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
+    .poster{ font-family:'Anton',Impact,sans-serif; letter-spacing:.01em; }
+    .menu-it{ font-style:italic; font-weight:800; letter-spacing:-.02em; text-transform:lowercase; } /* brand "les crousty" look */
 
-/* 3D bowl container with sticker frame */
-#hero-canvas {
-  width: 100%;
-  height: 100%;
-  min-height: 400px;
-  position: relative;
-  background: radial-gradient(circle at 50% 50%, var(--cream) 0%, var(--yellow) 70%);
-}
-#hero-canvas canvas { display: block; width: 100% !important; height: 100% !important; }
+    /* halftone print dots (accent — jamais de jaune) */
+    .halftone{ background-image:radial-gradient(circle, rgba(214,48,110,.18) 1.1px, transparent 1.5px); background-size:15px 15px; }
+    .halftone-i{ background-image:radial-gradient(circle, rgba(59,59,184,.20) 1.1px, transparent 1.5px); background-size:15px 15px; }
 
-/* Reveal */
-.reveal { opacity: 0; transform: translateY(40px) rotate(0deg); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-.reveal.visible { opacity: 1; transform: translateY(0) rotate(0deg); }
-.reveal.r-left { transform: translateY(40px) rotate(-5deg); }
-.reveal.r-left.visible { transform: translateY(0) rotate(-2deg); }
-.reveal.r-right { transform: translateY(40px) rotate(5deg); }
-.reveal.r-right.visible { transform: translateY(0) rotate(2deg); }
+    /* brand wordmark gradients (logo CB = magenta→indigo, justifié) */
+    .ink-c{ background:linear-gradient(92deg,#E63946,#D6306E 70%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .ink-b{ background:linear-gradient(92deg,#6B3FB4,#3B3BB8); -webkit-background-clip:text; background-clip:text; color:transparent; }
 
-/* Headline word reveal */
-.word-reveal { display: inline-block; overflow: hidden; vertical-align: bottom; }
-.word-reveal span {
-  display: inline-block;
-  transform: translateY(110%);
-  transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.word-reveal.in span { transform: translateY(0); }
+    .reveal{ opacity:0; transform:translateY(26px); }
 
-/* Underline scribble */
-.scribble {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12'%3E%3Cpath d='M2 6 Q50 2 100 7 T198 5' stroke='%23E63946' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-  background-size: 100% 0.5em;
-  padding-bottom: 0.1em;
-}
+    /* marquee */
+    @keyframes marquee{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+    .marquee-track{ display:inline-flex; white-space:nowrap; animation:marquee 24s linear infinite; }
 
-/* Tape decoration */
-.tape::before {
-  content: '';
-  position: absolute;
-  top: -12px;
-  left: 50%;
-  transform: translateX(-50%) rotate(-3deg);
-  width: 80px;
-  height: 24px;
-  background: var(--red);
-  border: 2px solid var(--ink);
-  opacity: 0.9;
-}
+    /* steam wisps over hot bowls */
+    @keyframes steam{
+      0%{ opacity:0; transform:translateY(8px) scaleX(1); }
+      35%{ opacity:.55; }
+      100%{ opacity:0; transform:translateY(-46px) scaleX(1.5); }
+    }
+    .wisp{ position:absolute; bottom:62%; width:9px; height:48px; border-radius:50%;
+      background:linear-gradient(to top, rgba(255,255,255,.0), rgba(255,255,255,.5)); filter:blur(5px);
+      animation:steam 3.4s ease-in-out infinite; }
 
-/* Big number stroke */
-.stroke-num {
-  -webkit-text-stroke: 3px var(--ink);
-  color: transparent;
-}
-</style>
+    /* dotted leader for menu rows */
+    .leader{ flex:1; height:0; border-bottom:2px dotted rgba(255,255,255,.22); transform:translateY(-5px); margin:0 .6rem; }
+
+    /* stamp */
+    .stamp{ font-family:'Anton'; letter-spacing:.06em; color:#E63946; border:2.5px solid #E63946;
+      border-radius:8px; padding:5px 12px 4px; text-transform:uppercase;
+      box-shadow:inset 0 0 0 2px rgba(230,57,70,.25); }
+
+    .mobile-menu{ transition:max-height .4s ease, opacity .3s ease; max-height:0; opacity:0; overflow:hidden; }
+    .mobile-menu.open{ max-height:460px; opacity:1; }
+
+    @media (prefers-reduced-motion:reduce){ .reveal{opacity:1!important;transform:none!important;} .marquee-track,.wisp{animation:none;} }
+  </style>
 </head>
-<body>
 
-<!-- NAV -->
-<nav class="sticky top-0 z-50 bg-yellow border-b-[3px] border-ink px-5 md:px-10 py-3 flex items-center justify-between">
-  <a href="#" class="font-display text-2xl md:text-3xl">
-    CROUSTY<span class="text-red">.</span>BOWLS
-  </a>
-  <ul class="hidden md:flex items-center gap-7 text-sm font-bold uppercase">
-    <li><a href="#menu" class="hover:text-red transition">Menu</a></li>
-    <li><a href="#story" class="hover:text-red transition">Le concept</a></li>
-    <li><a href="#location" class="hover:text-red transition">Nous trouver</a></li>
-  </ul>
-  <a href="#order" class="brutal brutal-hover brutal-press bg-red text-cream px-5 py-2.5 font-bold uppercase text-sm">
-    Commander 🔥
-  </a>
-</nav>
+<body class="bg-ink text-white antialiased selection:bg-tomato/40">
 
-<!-- HERO -->
-<section class="relative min-h-[90vh] py-12 md:py-16 overflow-hidden">
-  <div class="max-w-7xl mx-auto px-5 md:px-10 grid md:grid-cols-2 gap-8 items-center">
+  <!-- ============== LOGO SPRITE (CB monogramme + 2 paires de baguettes, anneau conique) ============== -->
+  <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden;">
+    <symbol id="cb-logo" viewBox="0 0 100 100">
 
-    <div class="relative min-w-0">
-      <!-- Top sticker badge -->
-      <div class="inline-block brutal-sm bg-cream px-3 py-1.5 mb-6 font-bold text-xs uppercase reveal r-left">
-        <span class="inline-block w-2 h-2 rounded-full bg-red mr-2 animate-pulse"></span>
-        Ouvert · 68 Rue Maxime Guillot, Chenôve
-      </div>
+      <!-- BAGUETTES — paire haut-droite avec pommeaux noirs -->
+      <g transform="rotate(-42 50 50)">
+        <rect x="46.7" y="-4" width="2.8" height="34" rx="1.4" fill="#FFFFFF"/>
+        <rect x="51.5" y="-4" width="2.8" height="34" rx="1.4" fill="#FFFFFF"/>
+        <rect x="46.7" y="-4" width="2.8" height="4.5" rx="1.4" fill="#0A0A0F"/>
+        <rect x="51.5" y="-4" width="2.8" height="4.5" rx="1.4" fill="#0A0A0F"/>
+      </g>
 
-      <h1 class="font-display text-[12vw] md:text-[5.2vw] leading-[0.9] mb-6">
-        <div class="word-reveal"><span>LE <span class="text-red">BOWL</span></span></div>
-        <div class="word-reveal"><span>QUI A</span></div>
-        <div class="word-reveal"><span>RETOURNÉ</span></div>
-        <div class="word-reveal"><span class="scribble">CHENÔVE</span> <span class="wiggle inline-block">🔥</span></div>
-      </h1>
+      <!-- BAGUETTES — paire bas-gauche -->
+      <g transform="rotate(138 50 50)">
+        <rect x="46.7" y="-4" width="2.8" height="34" rx="1.4" fill="#FFFFFF"/>
+        <rect x="51.5" y="-4" width="2.8" height="34" rx="1.4" fill="#FFFFFF"/>
+      </g>
 
-      <p class="text-lg font-medium mb-8 max-w-md reveal" style="transition-delay: 0.5s">
-        Riz fondant. Poulet pané <span class="font-bold">ULTRA</span> croustillant.
-        Sauce maison qui rend accro. <span class="font-bold">Le phénomène TikTok</span> est arrivé.
-      </p>
+      <!-- ANNEAU CONIQUE — 6 arcs colorés (haut → droite → bas → gauche) -->
+      <g fill="none" stroke-width="11" stroke-linecap="butt">
+        <path d="M 50 10 A 40 40 0 0 1 84.64 30"   stroke="#E63946"/>
+        <path d="M 84.64 30 A 40 40 0 0 1 84.64 70" stroke="#D6306E"/>
+        <path d="M 84.64 70 A 40 40 0 0 1 50 90"   stroke="#6B3FB4"/>
+        <path d="M 50 90 A 40 40 0 0 1 15.36 70"   stroke="#3B3BB8"/>
+        <path d="M 15.36 70 A 40 40 0 0 1 15.36 30" stroke="#7B2F94"/>
+        <path d="M 15.36 30 A 40 40 0 0 1 50 10"   stroke="#D6306E"/>
+      </g>
 
-      <div class="flex flex-col sm:flex-row gap-3 reveal" style="transition-delay: 0.7s">
-        <a href="#order" class="brutal brutal-hover brutal-press bg-red text-cream px-7 py-4 font-bold uppercase inline-flex items-center justify-center gap-2">
-          Je veux mon bowl
-          <span class="text-xl">→</span>
+      <!-- LETTRES CB blanches geometric heavy -->
+      <text x="50" y="61" text-anchor="middle"
+            font-family="Manrope, Arial, sans-serif"
+            font-weight="900"
+            font-size="34"
+            letter-spacing="-3"
+            fill="#FFFFFF">CB</text>
+
+    </symbol>
+  </svg>
+
+  <!-- ============== NAV ============== -->
+  <header id="top" class="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-ink/95">
+    <div class="mx-auto max-w-[1240px] px-5 sm:px-7">
+      <div class="flex h-[60px] items-center justify-between gap-4">
+
+        <a href="#top" class="flex items-center gap-2.5 shrink-0">
+          <svg class="h-9 w-9 shrink-0" aria-label="Logo Crousty Bowls" role="img"><use href="#cb-logo"/></svg>
+          <span class="leading-none">
+            <span class="block text-[14px] font-extrabold italic tracking-tight">Crousty Bowls</span>
+            <span class="block text-[9px] uppercase tracking-[0.34em] text-white/40 mt-1">Chenôve · 21</span>
+          </span>
         </a>
-        <a href="#menu" class="brutal brutal-hover brutal-press bg-cream px-7 py-4 font-bold uppercase inline-flex items-center justify-center gap-2">
-          Voir la carte
-        </a>
+
+        <nav class="hidden lg:flex items-center gap-6 text-[12px] font-bold uppercase tracking-wider text-white/55">
+          <a href="#crousty"  class="hover:text-white transition-colors"><span class="text-tomato">01</span> Crousty</a>
+          <a href="#poutine"  class="hover:text-white transition-colors"><span class="text-tomato">02</span> Poutine</a>
+          <a href="#yakisoba" class="hover:text-white transition-colors"><span class="text-tomato">03</span> Yakisoba</a>
+          <a href="#sushis"   class="hover:text-white transition-colors"><span class="text-tomato">04</span> Sushis</a>
+          <a href="#entrees"  class="hover:text-white transition-colors"><span class="text-tomato">05</span> Entrées</a>
+          <a href="#boissons" class="hover:text-white transition-colors"><span class="text-tomato">06</span> Boissons</a>
+        </nav>
+
+        <div class="flex items-center gap-2.5">
+          <a href="#commander" class="hidden sm:inline-flex items-center gap-1.5 bg-tomato px-4 py-2 text-[12px] font-extrabold uppercase tracking-wide text-white hover:bg-magenta transition-colors" style="border-radius:3px;">
+            Commander
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <button id="burger" aria-label="Menu" class="lg:hidden grid place-items-center h-9 w-9 border border-white/15 text-white/80" style="border-radius:3px;">
+            <svg id="burger-open" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            <svg id="burger-close" class="hidden" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div id="mobileMenu" class="mobile-menu lg:hidden">
+        <div class="flex flex-col gap-0.5 pb-3 pt-1 text-[14px] font-bold uppercase tracking-wide">
+          <a href="#crousty"  class="mobmenu-link px-2 py-3 text-white/75 border-b border-white/8"><span class="text-tomato mr-2">01</span>Crousty</a>
+          <a href="#poutine"  class="mobmenu-link px-2 py-3 text-white/75 border-b border-white/8"><span class="text-tomato mr-2">02</span>Poutine</a>
+          <a href="#yakisoba" class="mobmenu-link px-2 py-3 text-white/75 border-b border-white/8"><span class="text-tomato mr-2">03</span>Yakisoba</a>
+          <a href="#sushis"   class="mobmenu-link px-2 py-3 text-white/75 border-b border-white/8"><span class="text-tomato mr-2">04</span>Sushis</a>
+          <a href="#entrees"  class="mobmenu-link px-2 py-3 text-white/75 border-b border-white/8"><span class="text-tomato mr-2">05</span>Entrées</a>
+          <a href="#boissons" class="mobmenu-link px-2 py-3 text-white/75 border-b border-white/8"><span class="text-tomato mr-2">06</span>Boissons</a>
+          <a href="#commander" class="mobmenu-link mt-2 bg-tomato px-3 py-3 text-center text-white" style="border-radius:3px;">Commander →</a>
+        </div>
       </div>
     </div>
+  </header>
 
-    <!-- 3D BOWL with sticker frame -->
-    <div class="relative">
-      <div class="absolute -top-4 -right-4 brutal bg-red text-cream px-4 py-2 font-display text-lg z-20 rotate-6">
-        ★ 4.7
-      </div>
-      <div class="absolute -bottom-4 -left-4 brutal bg-cream px-4 py-2 font-display text-lg z-20 -rotate-6">
-        HALAL ✓
-      </div>
-      <div id="hero-canvas-wrapper" class="brutal-lg bg-cream aspect-square">
-        <div id="hero-canvas"></div>
-        <div id="hero-fallback" class="absolute inset-0 hidden items-center justify-center text-[200px]">🍱</div>
-      </div>
-    </div>
-  </div>
+  <!-- ============== HERO ============== -->
+  <section class="relative min-h-[100svh] flex items-center pt-[60px] overflow-hidden">
+    <div class="pointer-events-none absolute inset-0 halftone opacity-50"></div>
+    <div class="pointer-events-none absolute -top-32 -left-40 h-[460px] w-[460px] rounded-full blur-[150px] opacity-[0.16]" style="background:radial-gradient(circle,#D6306E,transparent 70%);"></div>
+    <div class="pointer-events-none absolute bottom-0 right-0 h-[520px] w-[520px] rounded-full blur-[160px] opacity-[0.16]" style="background:radial-gradient(circle,#3B3BB8,transparent 70%);"></div>
+    <svg class="pointer-events-none absolute -left-8 bottom-4 h-[230px] w-[230px] opacity-[0.05] hidden md:block" aria-hidden="true"><use href="#cb-logo"/></svg>
 
-  <!-- Scroll cue -->
-  <div class="text-center mt-12 font-bold uppercase text-xs">
-    Scroll <span class="bounce">↓</span>
-  </div>
-</section>
+    <div class="relative mx-auto w-full max-w-[1240px] px-5 sm:px-7">
+      <div class="grid lg:grid-cols-12 gap-y-10 items-center">
 
-<!-- MARQUEE -->
-<section class="bg-ink text-yellow py-6 border-y-[3px] border-ink overflow-hidden">
-  <div class="marquee font-display text-3xl md:text-5xl">
-    <div class="flex items-center gap-10 px-5 shrink-0">
-      <span>★ 4.7 GOOGLE</span><span class="text-red">●</span>
-      <span>100% HALAL</span><span class="text-red">●</span>
-      <span>LE PHÉNOMÈNE TIKTOK</span><span class="text-red">●</span>
-      <span>LIVRAISON DIJON</span><span class="text-red">●</span>
-      <span>TERRASSE OUVERTE 🔥</span><span class="text-red">●</span>
-    </div>
-    <div class="flex items-center gap-10 px-5 shrink-0">
-      <span>★ 4.7 GOOGLE</span><span class="text-red">●</span>
-      <span>100% HALAL</span><span class="text-red">●</span>
-      <span>LE PHÉNOMÈNE TIKTOK</span><span class="text-red">●</span>
-      <span>LIVRAISON DIJON</span><span class="text-red">●</span>
-      <span>TERRASSE OUVERTE 🔥</span><span class="text-red">●</span>
-    </div>
-  </div>
-</section>
-
-<!-- STORY -->
-<section id="story" class="py-24 px-5 md:px-10 max-w-6xl mx-auto">
-  <div class="text-center mb-16">
-    <div class="inline-block brutal-sm bg-cream px-3 py-1 mb-6 font-bold text-xs uppercase reveal">01 — Le concept</div>
-    <h2 class="font-display text-5xl md:text-7xl reveal">
-      UNE RECETTE.<br>
-      <span class="text-red">UNE OBSESSION.</span>
-    </h2>
-  </div>
-
-  <div class="grid md:grid-cols-3 gap-6">
-    <div class="brutal bg-cream p-6 sticker reveal r-left">
-      <div class="font-display text-6xl stroke-num mb-4">01</div>
-      <div class="text-5xl mb-3">🍚</div>
-      <h3 class="font-display text-2xl mb-2">RIZ QUI RÉCONFORTE</h3>
-      <p class="font-medium">Cuisson minute, vapeur parfaite. La base parfaite.</p>
-    </div>
-    <div class="brutal bg-cream p-6 reveal" style="transition-delay: 0.15s">
-      <div class="font-display text-6xl stroke-num mb-4">02</div>
-      <div class="text-5xl mb-3">🍗</div>
-      <h3 class="font-display text-2xl mb-2">POULET QUI CROUSTILLE</h3>
-      <p class="font-medium">Pané maison, frit à la commande. Le crunch ULTIME.</p>
-    </div>
-    <div class="brutal bg-cream p-6 sticker-r reveal r-right" style="transition-delay: 0.3s">
-      <div class="font-display text-6xl stroke-num mb-4">03</div>
-      <div class="text-5xl mb-3">🥫</div>
-      <h3 class="font-display text-2xl mb-2">SAUCE QUI REND ACCRO</h3>
-      <p class="font-medium">Recette maison secrète. On dira rien. Vous reviendrez.</p>
-    </div>
-  </div>
-</section>
-
-<!-- INGREDIENTS -->
-<section class="py-24 bg-red text-cream border-y-[4px] border-ink">
-  <div class="max-w-6xl mx-auto px-5 md:px-10">
-    <div class="text-center mb-16">
-      <div class="inline-block brutal-sm bg-cream text-ink px-3 py-1 mb-6 font-bold text-xs uppercase reveal">02 — Le rituel</div>
-      <h2 class="font-display text-5xl md:text-7xl reveal">
-        4 INGRÉDIENTS.<br>
-        <span class="text-yellow wiggle inline-block">ZÉRO COMPROMIS.</span>
-      </h2>
-    </div>
-
-    <div class="grid md:grid-cols-4 gap-5">
-      <div class="brutal bg-yellow text-ink p-6 text-center reveal r-left">
-        <div class="text-6xl mb-3 bounce">🍚</div>
-        <div class="text-xs font-bold uppercase opacity-70 mb-1">01 — Base</div>
-        <h4 class="font-display text-xl">RIZ VAPEUR</h4>
-      </div>
-      <div class="brutal bg-yellow text-ink p-6 text-center reveal" style="transition-delay: 0.1s">
-        <div class="text-6xl mb-3 bounce" style="animation-delay: 0.2s">🍗</div>
-        <div class="text-xs font-bold uppercase opacity-70 mb-1">02 — Star</div>
-        <h4 class="font-display text-xl">POULET PANÉ</h4>
-      </div>
-      <div class="brutal bg-yellow text-ink p-6 text-center reveal" style="transition-delay: 0.2s">
-        <div class="text-6xl mb-3 bounce" style="animation-delay: 0.4s">🧅</div>
-        <div class="text-xs font-bold uppercase opacity-70 mb-1">03 — Crunch</div>
-        <h4 class="font-display text-xl">OIGNONS FRITS</h4>
-      </div>
-      <div class="brutal bg-yellow text-ink p-6 text-center sticker-r reveal r-right" style="transition-delay: 0.3s">
-        <div class="text-6xl mb-3 bounce" style="animation-delay: 0.6s">🥫</div>
-        <div class="text-xs font-bold uppercase opacity-70 mb-1">04 — Secret</div>
-        <h4 class="font-display text-xl">SAUCE MAISON</h4>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- MENU -->
-<section id="menu" class="py-24 px-5 md:px-10 max-w-7xl mx-auto">
-  <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-    <div>
-      <div class="inline-block brutal-sm bg-cream px-3 py-1 mb-4 font-bold text-xs uppercase reveal">03 — La carte</div>
-      <h2 class="font-display text-5xl md:text-7xl reveal leading-none">
-        TOUT EST<br>
-        <span class="text-red">DANS LA BOX.</span>
-      </h2>
-    </div>
-    <p class="font-bold uppercase text-sm max-w-xs reveal">Halal · Sur place · Emporter · Livraison Dijon métropole</p>
-  </div>
-
-  <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-    <a href="#order" class="brutal brutal-hover bg-cream p-6 block">
-      <div class="aspect-square bg-yellow brutal-sm mb-5 flex items-center justify-center text-7xl">🍱</div>
-      <div class="inline-block bg-red text-cream px-2 py-0.5 text-xs font-bold uppercase mb-2">L'ORIGINAL</div>
-      <h3 class="font-display text-2xl mb-1">CROUSTY BOWLS</h3>
-      <p class="text-sm font-medium opacity-70 mb-4">Riz, poulet pané, sauce, oignons frits.</p>
-      <div class="font-display text-2xl">9,90 — 11,90 €</div>
-    </a>
-
-    <a href="#order" class="brutal brutal-hover bg-cream p-6 block">
-      <div class="aspect-square bg-red brutal-sm mb-5 flex items-center justify-center text-7xl">🍢</div>
-      <div class="inline-block bg-ink text-yellow px-2 py-0.5 text-xs font-bold uppercase mb-2">DU GRILL</div>
-      <h3 class="font-display text-2xl mb-1">BROCHETTES</h3>
-      <p class="text-sm font-medium opacity-70 mb-4">Grillées minute, marinées maison.</p>
-      <div class="font-display text-2xl">5,90 — 19,90 €</div>
-    </a>
-
-    <a href="#order" class="brutal brutal-hover bg-cream p-6 block">
-      <div class="aspect-square bg-yellow brutal-sm mb-5 flex items-center justify-center text-7xl">🥟</div>
-      <div class="inline-block bg-red text-cream px-2 py-0.5 text-xs font-bold uppercase mb-2">À PARTAGER</div>
-      <h3 class="font-display text-2xl mb-1">NEMS & SAMOSAS</h3>
-      <p class="text-sm font-medium opacity-70 mb-4">Frits, croustillants, à tremper.</p>
-      <div class="font-display text-2xl">3,50 — 9,50 €</div>
-    </a>
-
-    <a href="#order" class="brutal brutal-hover bg-cream p-6 block">
-      <div class="aspect-square bg-red brutal-sm mb-5 flex items-center justify-center text-7xl">🍣</div>
-      <div class="inline-block bg-ink text-yellow px-2 py-0.5 text-xs font-bold uppercase mb-2">FRAIS DU JOUR</div>
-      <h3 class="font-display text-2xl mb-1">SUSHIS</h3>
-      <p class="text-sm font-medium opacity-70 mb-4">Pack de 8 pièces.</p>
-      <div class="font-display text-2xl">9,90 €</div>
-    </a>
-  </div>
-</section>
-
-<!-- LOCATION -->
-<section id="location" class="py-24 bg-ink text-cream border-y-[4px] border-ink">
-  <div class="max-w-6xl mx-auto px-5 md:px-10">
-    <div class="grid md:grid-cols-2 gap-12 items-center">
-      <div>
-        <div class="inline-block brutal-sm bg-yellow text-ink px-3 py-1 mb-6 font-bold text-xs uppercase reveal">04 — Nous trouver</div>
-        <h2 class="font-display text-5xl md:text-7xl mb-10 reveal leading-none">
-          ON VOUS<br>
-          <span class="text-yellow">ATTEND.</span>
-        </h2>
-
-        <div class="space-y-5">
-          <div class="brutal bg-yellow text-ink p-5 reveal">
-            <div class="text-xs font-bold uppercase opacity-60 mb-1">📍 Adresse</div>
-            <p class="font-display text-2xl">68 Rue Maxime Guillot<br>21300 Chenôve</p>
+        <!-- LEFT: type -->
+        <div class="lg:col-span-7 lg:pr-6 order-2 lg:order-1">
+          <!-- kicker with filet -->
+          <div class="reveal flex items-center gap-3 mb-7">
+            <span class="block h-[2px] w-10 bg-tomato"></span>
+            <span class="text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.28em] text-white/60">Street-food croustillante · Chenôve, aux portes de Dijon</span>
           </div>
-          <div class="brutal bg-cream text-ink p-5 reveal" style="transition-delay: 0.1s">
-            <div class="text-xs font-bold uppercase opacity-60 mb-1">🕐 Horaires</div>
-            <p class="font-display text-xl">Lun — Dim · 11h30 — 23h00</p>
-            <p class="text-xs mt-1 opacity-60">⚠️ Horaires à confirmer avec le gérant</p>
-          </div>
-          <div class="brutal bg-red text-cream p-5 reveal" style="transition-delay: 0.2s">
-            <div class="text-xs font-bold uppercase opacity-80 mb-1">🪑 Sur place</div>
-            <p class="font-display text-xl">Salle · Terrasse · Emporter · Livraison</p>
+
+          <h1 class="reveal poster leading-[0.95] text-[clamp(2.8rem,12vw,9.5rem)]">
+            <span class="block"><span class="ink-c inline-block pb-[0.08em]">CROUSTY</span></span>
+            <span class="block -mt-1 sm:-mt-2"><span class="ink-b inline-block pb-[0.08em]">BOWLS</span></span>
+          </h1>
+
+          <p class="reveal mt-6 max-w-[30rem] text-lg sm:text-2xl font-medium text-white/80 leading-snug">
+            Riz, tenders, sauce maison <span class="text-tomato">qui dégouline</span>, oignons crispy par-dessus. Le bowl croustillant — et rien d'autre.
+          </p>
+
+          <div class="reveal mt-8 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-y-4 gap-x-5">
+            <!-- CTA primaire : appeler pour commander -->
+            <a href="tel:0956657456" class="group inline-flex items-center justify-center gap-2.5 bg-tomato px-7 py-4 text-[16px] sm:text-[17px] font-extrabold uppercase tracking-wide text-white hover:bg-magenta transition-colors shadow-[0_10px_30px_-10px_rgba(230,57,70,0.7)]" style="border-radius:3px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+              Commander · 09 56 65 74 56
+            </a>
+            <!-- CTA secondaire : voir la carte -->
+            <a href="#crousty" class="group inline-flex items-center gap-2 text-[15px] font-bold uppercase tracking-wide text-white underline decoration-tomato decoration-2 underline-offset-[6px] hover:text-tomato transition-colors">
+              Voir la carte
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
           </div>
         </div>
 
-        <a href="https://maps.google.com/?q=68+Rue+Maxime+Guillot+Chenôve" target="_blank" class="brutal brutal-hover brutal-press bg-yellow text-ink px-6 py-3 font-bold uppercase mt-8 inline-flex items-center gap-2">
-          Itinéraire <span>→</span>
-        </a>
+        <!-- RIGHT: bowl bleeding off -->
+        <div class="reveal lg:col-span-5 order-1 lg:order-2 relative">
+          <div class="relative max-w-[420px] mx-auto lg:max-w-none lg:mx-0 lg:-mr-24 xl:-mr-32">
+            <!-- steam -->
+            <div class="wisp" style="left:38%; animation-delay:0s;"></div>
+            <div class="wisp" style="left:50%; animation-delay:.9s; height:58px;"></div>
+            <div class="wisp" style="left:60%; animation-delay:1.7s;"></div>
+
+            <div data-parallax class="relative aspect-square w-full overflow-hidden border-[3px] border-white/12" style="border-radius:6px; box-shadow:0 40px 80px -30px rgba(0,0,0,.8);">
+              <img src="https://placehold.co/1000x1000/0A0A0F/E63946?text=BOWL+SIGNATURE" alt="Bowl Crousty signature — riz, tenders croustillants, sauce maison" loading="eager" decoding="async" class="h-full w-full object-cover" />
+            </div>
+
+            <!-- price sticker, rotated -->
+            <div class="absolute -bottom-5 -left-4 sm:left-2 rotate-[-7deg] bg-ink border-2 border-tomato px-4 py-2" style="border-radius:4px;">
+              <span class="block text-[10px] uppercase tracking-widest text-white/50 leading-none">le bowl dès</span>
+              <span class="poster text-3xl text-tomato leading-none">9,90€</span>
+            </div>
+
+            <!-- handwritten annotation : texte en haut-droite, flèche descend vers le bowl -->
+            <div class="absolute -top-1 right-3 sm:right-4 flex flex-col items-end gap-0.5">
+              <span class="font-hand text-2xl text-white -rotate-6 leading-none whitespace-nowrap">notre best-seller</span>
+              <svg width="44" height="44" viewBox="0 0 44 44" fill="none" class="text-tomato mr-6 -mt-1" aria-hidden="true">
+                <path d="M40 4 C 36 18, 22 30, 8 40" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+                <path d="M14 36 L 6 40 L 12 44" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== BANDEAU LIVRAISON (flat, poster) ============== -->
+  <div class="relative overflow-hidden bg-indigo py-3 border-y-2 border-black/30">
+    <div class="marquee-track">
+      <div class="poster flex items-center text-[17px] sm:text-[19px] uppercase tracking-wide text-white">
+        <span class="px-7">Livraison <span class="line-through decoration-2 decoration-white/55 opacity-70">3,90€</span> offerte dès 20€</span><span class="text-tomato px-2">●</span>
+        <span class="px-7">Uber Eats</span><span class="text-tomato px-2">●</span>
+        <span class="px-7">Deliveroo</span><span class="text-tomato px-2">●</span>
+        <span class="px-7">À emporter & sur place</span><span class="text-tomato px-2">●</span>
+        <span class="px-7">Chenôve & autour de Dijon</span><span class="text-tomato px-2">●</span>
+      </div>
+      <div class="poster flex items-center text-[17px] sm:text-[19px] uppercase tracking-wide text-white" aria-hidden="true">
+        <span class="px-7">Livraison <span class="line-through decoration-2 decoration-white/55 opacity-70">3,90€</span> offerte dès 20€</span><span class="text-tomato px-2">●</span>
+        <span class="px-7">Uber Eats</span><span class="text-tomato px-2">●</span>
+        <span class="px-7">Deliveroo</span><span class="text-tomato px-2">●</span>
+        <span class="px-7">À emporter & sur place</span><span class="text-tomato px-2">●</span>
+        <span class="px-7">Chenôve & autour de Dijon</span><span class="text-tomato px-2">●</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============== 01 — LES CROUSTY ============== -->
+  <section id="crousty" class="relative pt-16 pb-20 sm:pt-24 sm:pb-28">
+    <div class="pointer-events-none absolute inset-0 halftone-i opacity-35"></div>
+
+    <div class="relative mx-auto max-w-[1240px] px-5 sm:px-7">
+
+      <!-- editorial section header -->
+      <div class="reveal grid lg:grid-cols-12 gap-6 items-end border-b-2 border-white/12 pb-7 mb-10 sm:mb-14">
+        <div class="lg:col-span-8 flex items-end gap-5">
+          <span class="poster text-[clamp(3rem,8vw,6rem)] leading-[0.7] text-white/14">01</span>
+          <div>
+            <h2 class="menu-it text-4xl sm:text-6xl">les crousty</h2>
+            <p class="mt-2 text-[12px] uppercase tracking-wider text-white/45">Prix avec canette 33cl · retire 1€ sans canette</p>
+          </div>
+        </div>
+        <p class="lg:col-span-4 text-[15px] leading-relaxed text-white/65">
+          La signature de la maison. Un fond de riz, la sauce maison, des tenders ultra-croustillants. À Chenôve, on mange croustillant — pas autrement.
+        </p>
       </div>
 
-      <div class="brutal-lg bg-cream aspect-square overflow-hidden reveal r-right">
-        <iframe
-          src="https://www.openstreetmap.org/export/embed.html?bbox=5.001,47.276,5.025,47.290&layer=mapnik&marker=47.283,5.013"
-          width="100%" height="100%" style="border:0;"
-          loading="lazy"></iframe>
+      <!-- mosaïque éditoriale : 1 grosse (Dynamite) + 7 variées -->
+      <div class="grid lg:grid-cols-12 gap-7 items-start">
+
+        <!-- FEATURE : Dynamite (portrait) -->
+        <article class="reveal lg:col-span-5 relative group overflow-hidden border-[3px] border-white/12" style="border-radius:8px;">
+          <div class="relative aspect-[4/5] overflow-hidden">
+            <div class="wisp" style="left:32%; bottom:54%; animation-delay:.4s;"></div>
+            <div class="wisp" style="left:46%; bottom:54%; animation-delay:1.3s; height:56px;"></div>
+            <img src="https://placehold.co/800x1000/0A0A0F/E63946?text=CROUSTY+DYNAMITE" alt="Crousty Dynamite — riz, crevette panée, sauce dynamite, oignons crispy" loading="lazy" decoding="async" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            <div class="absolute inset-0" style="background:linear-gradient(to top, rgba(10,10,15,.96) 8%, rgba(10,10,15,.05) 56%);"></div>
+            <div class="absolute top-4 left-4 -rotate-6"><span class="stamp text-[12px]">spécialité maison</span></div>
+            <span class="absolute top-5 right-4 font-hand text-2xl text-white rotate-3 hidden sm:block">ça arrache →</span>
+            <div class="absolute bottom-0 inset-x-0 p-5 sm:p-7">
+              <div class="flex items-end justify-between gap-3">
+                <h3 class="poster text-3xl sm:text-5xl text-white leading-[0.88]">CROUSTY<br>DYNAMITE</h3>
+                <span class="poster shrink-0 text-3xl sm:text-4xl text-tomato leading-none">10,90€</span>
+              </div>
+              <p class="mt-3 text-[13px] sm:text-[14px] text-white/65">riz · sauce maison · crevette panée · sauce dynamite · oignons crispy · persil</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- LISTE : 7 autres crousty (carte papier, 2 colonnes) -->
+        <div class="reveal lg:col-span-7 flex flex-col">
+          <div class="grid sm:grid-cols-2 gap-x-9 gap-y-6">
+
+            <div>
+              <div class="flex items-end gap-2">
+                <h3 class="menu-it text-xl text-white">crousty original</h3>
+                <span class="leader"></span>
+                <span class="poster text-xl text-white shrink-0">9,90€</span>
+              </div>
+              <p class="mt-1 text-[12.5px] text-white/50">riz · sauce maison · tenders · sauce aigre douce · oignons crispy · persil</p>
+            </div>
+
+            <div>
+              <div class="flex items-end gap-2">
+                <h3 class="menu-it text-xl text-white">crousty karaage</h3>
+                <span class="leader"></span>
+                <span class="poster text-xl text-white shrink-0">10,90€</span>
+              </div>
+              <p class="mt-1 text-[12.5px] text-white/50">riz · sauce maison · poulet karaage (gingembre) · oignons crispy · persil</p>
+            </div>
+
+            <div>
+              <div class="flex items-end gap-2">
+                <h3 class="menu-it text-xl text-white">crousty sauce verte</h3>
+                <span class="leader"></span>
+                <span class="poster text-xl text-white shrink-0">9,90€</span>
+              </div>
+              <p class="mt-1 text-[12.5px] text-white/50">riz · sauce maison · tenders · sauce verte · oignons crispy · persil</p>
+            </div>
+
+            <div>
+              <div class="flex items-end gap-2">
+                <h3 class="menu-it text-xl text-white">crousty spicy</h3>
+                <span class="leader"></span>
+                <span class="poster text-xl text-white shrink-0">9,90€</span>
+              </div>
+              <p class="mt-1 text-[12.5px] text-white/50">riz · sauce maison · tenders · sauce spicy · jalapeños · oignons crispy</p>
+            </div>
+
+            <div>
+              <div class="flex items-end gap-2">
+                <h3 class="menu-it text-xl text-white">crousty végé</h3>
+                <span class="leader"></span>
+                <span class="poster text-xl text-white shrink-0">9,90€</span>
+              </div>
+              <p class="mt-1 text-[12.5px] text-white/50">riz · sauce maison · onion rings · sauce sucrée-salée · oignons frits · persil</p>
+            </div>
+
+            <div>
+              <div class="flex items-end gap-2">
+                <h3 class="menu-it text-xl text-white">crousty boursin</h3>
+                <span class="leader"></span>
+                <span class="poster text-xl text-white shrink-0">9,90€</span>
+              </div>
+              <p class="mt-1 text-[12.5px] text-white/50">riz · sauce maison · tenders · sauce boursin · oignons crispy · persil</p>
+            </div>
+
+            <div class="sm:col-span-2">
+              <div class="flex items-end gap-2">
+                <h3 class="menu-it text-xl text-white">crousty gratiné</h3>
+                <span class="leader"></span>
+                <span class="poster text-xl text-white shrink-0">11,90€</span>
+              </div>
+              <p class="mt-1 text-[12.5px] text-white/50">riz · sauce maison · tenders · sauce aigre douce · mozza · oignons crispy · persil</p>
+            </div>
+
+          </div>
+
+          <!-- options / upsell -->
+          <div class="mt-auto pt-9 flex flex-wrap items-center gap-3">
+            <span class="inline-flex items-center gap-2 border-2 border-violet bg-violet/15 pl-2 pr-3.5 py-2" style="border-radius:4px;">
+              <span class="poster text-[12px] bg-violet px-2 py-1 text-white leading-none" style="border-radius:3px;">XL</span>
+              <span class="text-[13px] font-bold text-white">Passe au format XL <span class="text-white/55">+2,50€</span></span>
+            </span>
+            <span class="inline-flex items-center gap-2 border-2 border-tomato bg-tomato/15 pl-2 pr-3.5 py-2" style="border-radius:4px;">
+              <span class="poster text-[12px] bg-tomato px-2 py-1 text-white leading-none" style="border-radius:3px;">+</span>
+              <span class="text-[13px] font-bold text-white">Supplément viande <span class="text-white/55">+2,50€</span></span>
+            </span>
+            <span class="font-hand text-lg text-white/45 ml-1">canette 33cl incluse · -1€ sans</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============== 02 — BOWLS POUTINE ============== -->
+  <section id="poutine" class="relative pt-10 pb-16 sm:pt-16 sm:pb-20 lg:pb-32 overflow-hidden">
+    <!-- rupture : filet rouge plein largeur -->
+    <div class="absolute left-0 right-0 top-0 h-[3px] bg-tomato"></div>
+
+    <div class="relative mx-auto max-w-[1240px] px-5 sm:px-7">
+
+      <!-- header : numéro à droite (rythme inversé vs Crousty) -->
+      <div class="reveal flex items-end justify-between gap-5 border-b-2 border-white/12 pb-7 mb-10 sm:mb-16">
+        <div>
+          <h2 class="menu-it text-4xl sm:text-6xl">les poutines</h2>
+          <p class="mt-2 text-[12px] uppercase tracking-wider text-white/45">Frites, sauce cheddar fondue & garnitures généreuses · 9,50€</p>
+        </div>
+        <span class="poster text-[clamp(3rem,8vw,6rem)] leading-[0.7] text-white/14">02</span>
+      </div>
+
+      <!-- mobile : scroll horizontal snap · desktop : 2×2 décalé -->
+      <div class="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-4 -mx-5 px-5 sm:mx-0 sm:px-0 lg:grid lg:grid-cols-2 lg:gap-x-7 lg:gap-y-9 lg:overflow-visible [scrollbar-width:none]">
+
+        <!-- French Chicken (tomato) -->
+        <article class="reveal snap-start shrink-0 w-[82%] xs:w-[70%] sm:w-[55%] lg:w-auto relative group overflow-hidden border-2" style="border-radius:8px; border-color:#E63946;">
+          <div class="relative aspect-[16/11] overflow-hidden">
+            <img src="https://placehold.co/900x620/0A0A0F/E63946?text=photo" alt="Poutine French Chicken — frites, sauce cheddar, tenders, mozza, oignons crispy" loading="lazy" decoding="async" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            <div class="absolute inset-0" style="background:linear-gradient(to top, rgba(10,10,15,.95) 8%, rgba(10,10,15,.05) 55%);"></div>
+            <span class="absolute top-3 right-3 rotate-[-6deg] poster text-2xl px-3 py-1.5 border-2 bg-ink leading-none" style="border-radius:4px; border-color:#E63946; color:#E63946;">9,50€</span>
+            <div class="absolute bottom-0 inset-x-0 p-5">
+              <h3 class="poster text-2xl sm:text-3xl text-white leading-none">FRENCH CHICKEN</h3>
+              <p class="mt-2 text-[12.5px] text-white/65">frites · sauce cheddar · tenders · mozza · oignons crispy</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Karaage Chicken (magenta) — décalé -->
+        <article class="reveal snap-start shrink-0 w-[82%] xs:w-[70%] sm:w-[55%] lg:w-auto lg:translate-y-10 relative group overflow-hidden border-2" style="border-radius:8px; border-color:#D6306E;">
+          <div class="relative aspect-[16/11] overflow-hidden">
+            <img src="https://placehold.co/900x620/0A0A0F/D6306E?text=photo" alt="Poutine Karaage Chicken — frites, sauce cheddar, poulet karaage, mozza, sauce aigre douce" loading="lazy" decoding="async" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            <div class="absolute inset-0" style="background:linear-gradient(to top, rgba(10,10,15,.95) 8%, rgba(10,10,15,.05) 55%);"></div>
+            <span class="absolute top-3 right-3 rotate-[-6deg] poster text-2xl px-3 py-1.5 border-2 bg-ink leading-none" style="border-radius:4px; border-color:#D6306E; color:#D6306E;">9,50€</span>
+            <div class="absolute bottom-0 inset-x-0 p-5">
+              <h3 class="poster text-2xl sm:text-3xl text-white leading-none">KARAAGE CHICKEN</h3>
+              <p class="mt-2 text-[12.5px] text-white/65">frites · sauce cheddar · poulet karaage · mozza · sauce aigre douce</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Montagnard (indigo) -->
+        <article class="reveal snap-start shrink-0 w-[82%] xs:w-[70%] sm:w-[55%] lg:w-auto relative group overflow-hidden border-2" style="border-radius:8px; border-color:#3B3BB8;">
+          <div class="relative aspect-[16/11] overflow-hidden">
+            <img src="https://placehold.co/900x620/0A0A0F/3B3BB8?text=photo" alt="Poutine Montagnard — frites, sauce cheddar, lardons, mozza, raclette" loading="lazy" decoding="async" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            <div class="absolute inset-0" style="background:linear-gradient(to top, rgba(10,10,15,.95) 8%, rgba(10,10,15,.05) 55%);"></div>
+            <span class="absolute top-3 right-3 rotate-[-6deg] poster text-2xl px-3 py-1.5 border-2 bg-ink leading-none" style="border-radius:4px; border-color:#3B3BB8; color:#6F6FE0;">9,50€</span>
+            <div class="absolute bottom-0 inset-x-0 p-5">
+              <h3 class="poster text-2xl sm:text-3xl text-white leading-none">MONTAGNARD</h3>
+              <p class="mt-2 text-[12.5px] text-white/65">frites · sauce cheddar · lardons · mozza · raclette</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Chèvre (violet) — décalé -->
+        <article class="reveal snap-start shrink-0 w-[82%] xs:w-[70%] sm:w-[55%] lg:w-auto lg:translate-y-10 relative group overflow-hidden border-2" style="border-radius:8px; border-color:#6B3FB4;">
+          <div class="relative aspect-[16/11] overflow-hidden">
+            <img src="https://placehold.co/900x620/0A0A0F/6B3FB4?text=photo" alt="Poutine Chèvre — frites, sauce cheddar, jambon, mozza, chèvre-miel" loading="lazy" decoding="async" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            <div class="absolute inset-0" style="background:linear-gradient(to top, rgba(10,10,15,.95) 8%, rgba(10,10,15,.05) 55%);"></div>
+            <span class="absolute top-3 right-3 rotate-[-6deg] poster text-2xl px-3 py-1.5 border-2 bg-ink leading-none" style="border-radius:4px; border-color:#6B3FB4; color:#9A6FE0;">9,50€</span>
+            <div class="absolute bottom-0 inset-x-0 p-5">
+              <h3 class="poster text-2xl sm:text-3xl text-white leading-none">CHÈVRE</h3>
+              <p class="mt-2 text-[12.5px] text-white/65">frites · sauce cheddar · jambon · mozza · chèvre-miel</p>
+            </div>
+          </div>
+        </article>
+
+      </div>
+      <p class="reveal mt-6 sm:hidden font-hand text-lg text-white/40">← fais glisser pour voir les 4 →</p>
+    </div>
+  </section>
+
+  <!-- ============== 03 — YAKISOBA ============== -->
+  <section id="yakisoba" class="relative py-16 sm:py-20 overflow-hidden border-t border-white/8 bg-ink2">
+    <div class="pointer-events-none absolute inset-0 halftone opacity-25"></div>
+    <div class="pointer-events-none absolute -right-24 top-1/2 -translate-y-1/2 h-[420px] w-[420px] rounded-full blur-[150px] opacity-[0.16]" style="background:radial-gradient(circle,#D6306E,transparent 70%);"></div>
+
+    <div class="relative mx-auto max-w-[1240px] px-5 sm:px-7">
+      <div class="grid lg:grid-cols-12 gap-10 items-center">
+
+        <!-- copy + chips -->
+        <div class="lg:col-span-7">
+          <div class="reveal flex items-center gap-4 mb-5">
+            <span class="poster text-[clamp(2.6rem,7vw,5rem)] leading-[0.7] text-white/14">03</span>
+            <h2 class="menu-it text-4xl sm:text-6xl leading-[0.9]">les nouilles<br class="hidden sm:block"> yakisoba</h2>
+          </div>
+          <p class="reveal text-[15px] sm:text-lg text-white/70 max-w-lg mb-2">
+            Nouilles sautées au wok, légumes croquants, la garniture que tu veux par-dessus. Un seul prix, tu choisis :
+          </p>
+          <p class="reveal poster text-tomato text-4xl mb-7">9,90€</p>
+          <div class="reveal flex flex-wrap gap-3">
+            <span class="inline-flex items-center gap-2.5 border-2 border-white/18 px-4 py-2.5 text-[13.5px] font-bold uppercase tracking-wide text-white/85 hover:border-tomato hover:text-white transition-colors" style="border-radius:4px;"><span class="h-2 w-2 rounded-full" style="background:#E63946;"></span>Veggie</span>
+            <span class="inline-flex items-center gap-2.5 border-2 border-white/18 px-4 py-2.5 text-[13.5px] font-bold uppercase tracking-wide text-white/85 hover:border-magenta hover:text-white transition-colors" style="border-radius:4px;"><span class="h-2 w-2 rounded-full" style="background:#D6306E;"></span>Tenders de poulet</span>
+            <span class="inline-flex items-center gap-2.5 border-2 border-white/18 px-4 py-2.5 text-[13.5px] font-bold uppercase tracking-wide text-white/85 hover:border-violet hover:text-white transition-colors" style="border-radius:4px;"><span class="h-2 w-2 rounded-full" style="background:#6B3FB4;"></span>Crevettes tempura</span>
+            <span class="inline-flex items-center gap-2.5 border-2 border-white/18 px-4 py-2.5 text-[13.5px] font-bold uppercase tracking-wide text-white/85 hover:border-indigo hover:text-white transition-colors" style="border-radius:4px;"><span class="h-2 w-2 rounded-full" style="background:#3B3BB8;"></span>Crevettes dynamite</span>
+            <span class="inline-flex items-center gap-2.5 border-2 border-white/18 px-4 py-2.5 text-[13.5px] font-bold uppercase tracking-wide text-white/85 hover:border-tomato hover:text-white transition-colors" style="border-radius:4px;"><span class="h-2 w-2 rounded-full" style="background:#E63946;"></span>Poulet karaage</span>
+          </div>
+        </div>
+
+        <!-- bowl -->
+        <div class="reveal lg:col-span-5 relative">
+          <div class="relative max-w-[380px] mx-auto lg:max-w-none">
+            <div class="wisp" style="left:40%; bottom:58%; animation-delay:.2s;"></div>
+            <div class="wisp" style="left:52%; bottom:58%; animation-delay:1.1s; height:54px;"></div>
+            <div class="relative aspect-square overflow-hidden border-[3px] border-white/12" style="border-radius:6px; box-shadow:0 30px 70px -28px rgba(0,0,0,.8);">
+              <img src="https://placehold.co/800x800/0A0A0F/D6306E?text=YAKISOBA" alt="Nouilles Yakisoba sautées au wok" loading="lazy" decoding="async" class="h-full w-full object-cover" />
+            </div>
+            <div class="absolute -bottom-4 -left-3 rotate-[-7deg] bg-ink border-2 border-tomato px-4 py-2" style="border-radius:4px;">
+              <span class="block text-[10px] uppercase tracking-widest text-white/50 leading-none">au choix</span>
+              <span class="poster text-3xl text-tomato leading-none">9,90€</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ORDER CTA -->
-<section id="order" class="py-24 px-5 md:px-10 bg-yellow">
-  <div class="max-w-5xl mx-auto text-center">
-    <div class="inline-block brutal-sm bg-cream px-3 py-1 mb-6 font-bold text-xs uppercase reveal">05 — Commander</div>
-    <h2 class="font-display text-5xl md:text-8xl mb-6 reveal leading-none">
-      CHOISIS TON<br>
-      <span class="text-red">LIVREUR.</span><span class="wiggle inline-block ml-2">🛵</span>
-    </h2>
-    <p class="font-bold uppercase text-sm mb-12 reveal">Disponible sur les principales plateformes</p>
+  <!-- ============== 04 — LES SUSHIS ============== -->
+  <section id="sushis" class="relative pt-16 pb-20 sm:pt-24 sm:pb-28 overflow-hidden border-t border-white/8">
+    <div class="pointer-events-none absolute inset-0 halftone-i opacity-20"></div>
 
-    <div class="grid sm:grid-cols-3 gap-5 max-w-4xl mx-auto">
-      <a href="#" class="brutal brutal-hover brutal-press bg-cream p-8 block">
-        <div class="font-display text-3xl mb-2">UBER EATS</div>
-        <div class="text-xs font-bold uppercase opacity-60">15-25 min</div>
-      </a>
-      <a href="#" class="brutal brutal-hover brutal-press bg-red text-cream p-8 block">
-        <div class="font-display text-3xl mb-2">DELIVEROO</div>
-        <div class="text-xs font-bold uppercase opacity-80">20-30 min</div>
-      </a>
-      <a href="#" class="brutal brutal-hover brutal-press bg-cream p-8 block">
-        <div class="font-display text-3xl mb-2">JUST EAT</div>
-        <div class="text-xs font-bold uppercase opacity-60">25-35 min</div>
-      </a>
+    <div class="relative mx-auto max-w-[1240px] px-5 sm:px-7">
+
+      <!-- header -->
+      <div class="reveal grid lg:grid-cols-12 gap-6 items-end border-b-2 border-white/12 pb-7 mb-14 sm:mb-20">
+        <div class="lg:col-span-8 flex items-end gap-5">
+          <span class="poster text-[clamp(3rem,8vw,6rem)] leading-[0.7] text-white/14">04</span>
+          <div>
+            <h2 class="menu-it text-4xl sm:text-6xl">les sushis</h2>
+            <p class="mt-2 text-[12px] uppercase tracking-wider text-white/45">2 accompagnements systématiques : riz + chou</p>
+          </div>
+        </div>
+        <p class="lg:col-span-4 text-[15px] leading-relaxed text-white/65">Trois plateaux, trois niveaux de gourmandise. Roulés frais, tu choisis ton camp.</p>
+      </div>
+
+      <!-- 3 plateaux façon carte des vins -->
+      <div class="grid md:grid-cols-3 gap-7 md:gap-5 items-start">
+
+        <!-- DÉCOUVERTE (violet) -->
+        <div class="reveal relative text-center px-6 py-9 border border-white/10 md:mt-6" style="border-radius:10px;">
+          <span class="font-hand text-3xl" style="color:#9A6FE0;">Découverte</span>
+          <div class="poster text-7xl sm:text-8xl text-white leading-none mt-3">18</div>
+          <div class="text-[11px] uppercase tracking-[0.34em] text-white/40 mt-1.5">pièces</div>
+          <div class="flex justify-center my-6">
+            <span class="rotate-[-5deg] poster text-3xl px-4 py-2 border-2 bg-ink leading-none" style="border-radius:5px;border-color:#6B3FB4;color:#9A6FE0;">19€</span>
+          </div>
+          <p class="text-[13px] text-white/55 lowercase leading-relaxed">8 california thon-mayo · 8 california avocat-poulet · 2 sushis saumon</p>
+        </div>
+
+        <!-- CŒUR DE GAMME (magenta) — mis en avant -->
+        <div class="reveal relative text-center px-6 py-11 border-2 bg-ink2 z-10" style="border-radius:12px;border-color:#D6306E;box-shadow:0 34px 80px -34px rgba(214,48,110,.65);">
+          <span class="absolute -top-3.5 left-1/2 -translate-x-1/2 poster text-[11px] uppercase tracking-wide bg-tomato text-white px-3 py-1.5 leading-none whitespace-nowrap" style="border-radius:3px;">le plus pris</span>
+          <span class="font-hand text-3xl" style="color:#F06AA0;">Cœur de Gamme</span>
+          <div class="poster text-8xl sm:text-9xl text-white leading-none mt-3">27</div>
+          <div class="text-[11px] uppercase tracking-[0.34em] text-white/45 mt-1.5">pièces</div>
+          <div class="flex justify-center my-6">
+            <span class="rotate-[-5deg] poster text-4xl px-5 py-2 border-2 bg-ink leading-none" style="border-radius:5px;border-color:#D6306E;color:#F06AA0;">28€</span>
+          </div>
+          <p class="text-[13px] text-white/65 lowercase leading-relaxed">8 california tempura · 8 california avocat-cheese · 8 spring roll saumon · 3 sushis saumon</p>
+        </div>
+
+        <!-- PREMIUM (indigo) -->
+        <div class="reveal relative text-center px-6 py-9 border border-white/10 md:mt-6" style="border-radius:10px;">
+          <span class="font-hand text-3xl" style="color:#6F6FE0;">Premium</span>
+          <div class="poster text-7xl sm:text-8xl text-white leading-none mt-3">36</div>
+          <div class="text-[11px] uppercase tracking-[0.34em] text-white/40 mt-1.5">pièces</div>
+          <div class="flex justify-center my-6">
+            <span class="rotate-[-5deg] poster text-3xl px-4 py-2 border-2 bg-ink leading-none" style="border-radius:5px;border-color:#3B3BB8;color:#6F6FE0;">38€</span>
+          </div>
+          <p class="text-[13px] text-white/55 lowercase leading-relaxed">8 california thon cuit-avocat · 8 green rolls concombre-cheese · 8 california crispy poulet-mayo épicée · 8 makis saumon · 4 sushis saumon</p>
+        </div>
+
+      </div>
+
+      <!-- mini-bandeau lot de 8 -->
+      <div class="reveal mt-14 flex flex-col sm:flex-row items-center justify-center gap-x-5 gap-y-3 border-2 border-dashed border-white/15 px-6 py-5" style="border-radius:10px;">
+        <span class="font-hand text-2xl text-white/65">ou simplement…</span>
+        <span class="poster text-xl text-white uppercase">le lot de 8</span>
+        <span class="rotate-[-4deg] poster text-2xl px-3.5 py-1.5 border-2 bg-ink leading-none" style="border-radius:5px;border-color:#E63946;color:#E63946;">9,90€</span>
+        <span class="text-[13.5px] text-white/55">Saumon ou Avocat · dispo en vitrine</span>
+      </div>
     </div>
+  </section>
 
-    <div class="mt-12 text-xs opacity-60 italic">⚠️ Plateformes à confirmer avec le gérant</div>
-  </div>
-</section>
+  <!-- ============== 05 — LES ENTRÉES ============== -->
+  <section id="entrees" class="relative py-16 sm:py-24 overflow-hidden border-t border-white/8 bg-ink2">
+    <div class="relative mx-auto max-w-[1100px] px-5 sm:px-7">
 
-<!-- FOOTER -->
-<footer class="bg-ink text-cream py-10 px-5 md:px-10 border-t-[4px] border-ink">
-  <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-    <div>
-      <div class="font-display text-2xl mb-2">CROUSTY<span class="text-red">.</span>BOWLS</div>
-      <p class="text-xs opacity-60">© 2026 Crousty Bowls Chenôve · Tous droits réservés</p>
+      <!-- header -->
+      <div class="reveal flex items-end justify-between gap-5 border-b-2 border-white/12 pb-7 mb-9 sm:mb-12">
+        <div>
+          <h2 class="menu-it text-4xl sm:text-6xl">les entrées</h2>
+          <p class="mt-2 text-[12px] uppercase tracking-wider text-white/45">L'ardoise à grignoter — sur place, à emporter, à partager</p>
+        </div>
+        <span class="poster text-[clamp(3rem,8vw,6rem)] leading-[0.7] text-white/14">05</span>
+      </div>
+
+      <!-- ardoise -->
+      <div class="reveal border-2 border-white/10 divide-y divide-white/8 px-5 sm:px-8" style="border-radius:12px;">
+
+        <!-- Nem's -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 py-5">
+          <div>
+            <h3 class="menu-it text-xl sm:text-2xl text-white">nem's ou samoussas</h3>
+            <p class="text-[11.5px] uppercase tracking-wide text-white/40 mt-0.5">différentes recettes dispo</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="inline-flex items-baseline gap-1.5 border border-white/15 px-2.5 py-1 text-[13px] text-white/85" style="border-radius:4px;"><span class="text-white/40">×2</span><b>3,50€</b></span>
+            <span class="inline-flex items-baseline gap-1.5 border border-white/15 px-2.5 py-1 text-[13px] text-white/85" style="border-radius:4px;"><span class="text-white/40">×4</span><b>5,50€</b></span>
+            <span class="inline-flex items-baseline gap-1.5 border border-white/15 px-2.5 py-1 text-[13px] text-white/85" style="border-radius:4px;"><span class="text-white/40">×6</span><b>7,50€</b></span>
+            <span class="inline-flex items-baseline gap-1.5 border border-white/15 px-2.5 py-1 text-[13px] text-white/85" style="border-radius:4px;"><span class="text-white/40">×8</span><b>9,50€</b></span>
+          </div>
+        </div>
+
+        <!-- Crevettes Tempura -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 py-5">
+          <div>
+            <h3 class="menu-it text-xl sm:text-2xl text-white">crevettes tempura</h3>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="inline-flex items-baseline gap-1.5 border border-white/15 px-2.5 py-1 text-[13px] text-white/85" style="border-radius:4px;"><span class="text-white/40">×2</span><b>3,90€</b></span>
+            <span class="inline-flex items-baseline gap-1.5 border border-white/15 px-2.5 py-1 text-[13px] text-white/85" style="border-radius:4px;"><span class="text-white/40">×4</span><b>6,90€</b></span>
+            <span class="inline-flex items-baseline gap-1.5 border border-white/15 px-2.5 py-1 text-[13px] text-white/85" style="border-radius:4px;"><span class="text-white/40">×6</span><b>9,90€</b></span>
+            <span class="inline-flex items-baseline gap-1.5 border border-white/15 px-2.5 py-1 text-[13px] text-white/85" style="border-radius:4px;"><span class="text-white/40">×8</span><b>12,90€</b></span>
+          </div>
+        </div>
+
+        <!-- Brochettes -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 py-5">
+          <div>
+            <h3 class="menu-it text-xl sm:text-2xl text-white">brochettes</h3>
+            <p class="text-[11.5px] uppercase tracking-wide text-white/40 mt-0.5">bœuf-fromage ou poulet</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="inline-flex items-baseline gap-1.5 border border-white/15 px-2.5 py-1 text-[13px] text-white/85" style="border-radius:4px;"><span class="text-white/40">×2</span><b>5,90€</b></span>
+            <span class="inline-flex items-baseline gap-1.5 border border-white/15 px-2.5 py-1 text-[13px] text-white/85" style="border-radius:4px;"><span class="text-white/40">×5</span><b>12,90€</b></span>
+            <span class="inline-flex items-baseline gap-1.5 border border-white/15 px-2.5 py-1 text-[13px] text-white/85" style="border-radius:4px;"><span class="text-white/40">×8</span><b>19,90€</b></span>
+          </div>
+        </div>
+
+        <!-- Riz + Choux -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 py-5">
+          <h3 class="menu-it text-xl sm:text-2xl text-white">riz + choux</h3>
+          <span class="inline-flex items-baseline gap-1.5 border border-white/15 px-3 py-1 text-[13px] text-white/85 self-start sm:self-auto" style="border-radius:4px;"><b>2,90€</b><span class="text-white/40">/ pièce</span></span>
+        </div>
+
+        <!-- Dynamites -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 py-5">
+          <div>
+            <h3 class="menu-it text-xl sm:text-2xl text-white inline-flex items-center gap-1.5">dynamites <svg width="14" height="14" viewBox="0 0 24 24" fill="#E63946" aria-hidden="true"><path d="M13.5 1.5c1 3.4-.6 5.2-2.2 6.9C9.4 10.3 7.5 12 7.5 15a6 6 0 0 0 9.9 4.6c1.8-1.6 2.6-4 2.1-6.3-.2 1-.9 1.9-1.9 2.2.8-2.2.3-4.8-1.4-6.7-1-1.1-2.3-2-2.7-4 0-.2-.2-.3-.4-.2-.4.6-1 1.4-1.1 2.4-.1-.4 0-1.2 1-4.5.1-.3-.2-.5-.5-.3-.4.3-.9.7-1.5 1.5zM12 14c.6-1.4 1.8-1.9 1.8-1.9-.2 1.3.6 2 1.3 2.7.6.6.9 1.6.5 2.5A2.6 2.6 0 0 1 12 18c-1-1-.7-2.6 0-4z"/></svg></h3>
+            <p class="text-[11.5px] uppercase tracking-wide text-white/40 mt-0.5">crevette ou poulet karaage</p>
+          </div>
+          <span class="inline-flex items-baseline gap-1.5 border border-white/15 px-3 py-1 text-[13px] text-white/85 self-start sm:self-auto" style="border-radius:4px;"><b>6,50€</b><span class="text-white/40">le bol de 5</span></span>
+        </div>
+
+      </div>
+
+      <!-- Kids menu : pastille fun -->
+      <div class="reveal mt-10 flex items-center gap-6 flex-wrap">
+        <div class="relative shrink-0">
+          <div class="grid place-items-center h-28 w-28 rotate-[-8deg] text-center" style="border-radius:50%;background:#D6306E;box-shadow:0 0 0 3px #0A0A0F, 0 0 0 5px #D6306E;">
+            <div>
+              <span class="block poster text-white text-2xl leading-none">KIDS</span>
+              <span class="block poster text-white text-lg leading-none mt-0.5">6,90€</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 class="poster text-2xl sm:text-3xl text-white">le menu des petits</h3>
+          <p class="text-[14px] text-white/65 mt-1">6,90€ · un truc à grignoter <span class="text-white">+ une surprise</span> dans la boîte.</p>
+        </div>
+      </div>
+
     </div>
-    <div class="flex items-center gap-5 text-sm font-bold uppercase">
-      <a href="https://www.instagram.com/crousty_bowls_chenove/" target="_blank" class="hover:text-yellow transition">Instagram</a>
-      <a href="#" class="hover:text-yellow transition">Mentions légales</a>
-      <a href="#" class="hover:text-yellow transition">CGV</a>
+  </section>
+
+  <!-- ============== 06 — LES BOISSONS ============== -->
+  <section id="boissons" class="relative pt-16 pb-20 sm:pt-24 sm:pb-28 overflow-hidden border-t border-white/8">
+    <div class="pointer-events-none absolute inset-0 halftone-i opacity-[0.12]"></div>
+
+    <div class="relative mx-auto max-w-[1240px] px-5 sm:px-7">
+
+      <!-- header -->
+      <div class="reveal flex items-end justify-between gap-5 border-b-2 border-white/12 pb-7 mb-10 sm:mb-14">
+        <div class="flex items-end gap-5">
+          <span class="poster text-[clamp(3rem,8vw,6rem)] leading-[0.7] text-white/14">06</span>
+          <div>
+            <h2 class="menu-it text-4xl sm:text-6xl">les boissons</h2>
+            <p class="mt-2 text-[12px] uppercase tracking-wider text-white/45">& petites douceurs pour finir</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-9 lg:gap-0">
+
+        <!-- COL 1 — chaudes -->
+        <div class="reveal lg:pr-10 lg:border-r lg:border-white/10">
+          <h3 class="poster text-xl text-white uppercase mb-5 flex items-center gap-2.5"><span class="h-2.5 w-2.5 rounded-full" style="background:#E63946;"></span>Boissons chaudes</h3>
+          <div class="space-y-3">
+            <div class="flex items-end gap-1"><span class="text-[14px] text-white/80">Espresso</span><span class="leader"></span><span class="poster text-[15px] text-white">1,60€</span></div>
+            <div class="flex items-end gap-1"><span class="text-[14px] text-white/80">Double espresso</span><span class="leader"></span><span class="poster text-[15px] text-white">2,50€</span></div>
+            <div class="flex items-end gap-1"><span class="text-[14px] text-white/80">Café au lait</span><span class="leader"></span><span class="poster text-[15px] text-white">2,30€</span></div>
+            <div class="flex items-end gap-1"><span class="text-[14px] text-white/80">Cappuccino</span><span class="leader"></span><span class="poster text-[15px] text-white">2,50€</span></div>
+            <div class="flex items-end gap-1"><span class="text-[14px] text-white/80">Chocolat chaud</span><span class="leader"></span><span class="poster text-[15px] text-white">2,50€</span></div>
+            <div class="flex items-end gap-1"><span class="text-[14px] text-white/80">Chocolat viennois</span><span class="leader"></span><span class="poster text-[15px] text-white">3,00€</span></div>
+            <div class="flex items-end gap-1"><span class="text-[14px] text-white/80">Café viennois</span><span class="leader"></span><span class="poster text-[15px] text-white">2,10€</span></div>
+            <div class="flex items-end gap-1"><span class="text-[14px] text-white/80">Thé</span><span class="leader"></span><span class="poster text-[15px] text-white">3,50€</span></div>
+          </div>
+        </div>
+
+        <!-- COL 2 — glacées -->
+        <div class="reveal lg:px-10 lg:border-r lg:border-white/10 flex flex-col">
+          <h3 class="poster text-xl text-white uppercase mb-5 flex items-center gap-2.5"><span class="h-2.5 w-2.5 rounded-full" style="background:#3B3BB8;"></span>Boissons glacées</h3>
+          <div class="space-y-3">
+            <div class="flex items-end gap-1"><span class="text-[14px] text-white/80">Iced Mocha</span><span class="leader"></span><span class="poster text-[15px] text-white">4,50€</span></div>
+            <div class="flex items-end gap-1"><span class="text-[14px] text-white/80">Iced Latte</span><span class="leader"></span><span class="poster text-[15px] text-white">4,50€</span></div>
+            <div class="flex items-end gap-1"><span class="text-[14px] text-white/80">Iced Caramel</span><span class="leader"></span><span class="poster text-[15px] text-white">4,50€</span></div>
+            <div class="flex items-end gap-1"><span class="text-[14px] text-white/80">Matcha</span><span class="leader"></span><span class="poster text-[15px] text-white">4,50€</span></div>
+            <div class="flex items-end gap-1"><span class="text-[14px] text-white/80">Matcha Mangue</span><span class="leader"></span><span class="poster text-[15px] text-white">4,90€</span></div>
+            <div class="flex items-end gap-1"><span class="text-[14px] text-white/80">Matcha Fraise</span><span class="leader"></span><span class="poster text-[15px] text-white">4,90€</span></div>
+          </div>
+          <div class="mt-5 bg-ink2 border border-white/10 px-4 py-3 text-[13px] text-white/65" style="border-radius:8px;">
+            Canette 33cl <span class="poster text-white text-[15px] align-baseline">2€</span> · Bouteille <span class="poster text-white text-[15px] align-baseline">3,50€</span>
+          </div>
+        </div>
+
+        <!-- COL 3 — milkshakes & desserts -->
+        <div class="reveal lg:pl-10">
+          <h3 class="poster text-xl text-white uppercase mb-4 flex items-center gap-2.5"><span class="h-2.5 w-2.5 rounded-full" style="background:#D6306E;"></span>Milkshakes</h3>
+          <div class="flex items-center gap-3 mb-4">
+            <span class="rotate-[-5deg] poster text-2xl px-3 py-1.5 border-2 bg-ink leading-none" style="border-radius:5px;border-color:#D6306E;color:#F06AA0;">4,90€</span>
+            <span class="text-[12.5px] text-white/55">supplément ingrédient <span class="text-white">+1€</span></span>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-8">
+            <span class="border border-white/15 px-3 py-1.5 text-[12.5px] font-bold text-white/85" style="border-radius:4px;">Vanille</span>
+            <span class="border border-white/15 px-3 py-1.5 text-[12.5px] font-bold text-white/85" style="border-radius:4px;">Fraise</span>
+            <span class="border border-white/15 px-3 py-1.5 text-[12.5px] font-bold text-white/85" style="border-radius:4px;">Spéculoos</span>
+            <span class="border border-white/15 px-3 py-1.5 text-[12.5px] font-bold text-white/85" style="border-radius:4px;">Snickers</span>
+            <span class="border border-white/15 px-3 py-1.5 text-[12.5px] font-bold text-white/85" style="border-radius:4px;">Kinder Bueno</span>
+            <span class="border border-white/15 px-3 py-1.5 text-[12.5px] font-bold text-white/85" style="border-radius:4px;">Pistache</span>
+            <span class="border border-white/15 px-3 py-1.5 text-[12.5px] font-bold text-white/85" style="border-radius:4px;">Oreo</span>
+          </div>
+          <div class="relative overflow-hidden border-2 px-5 py-5 flex items-center justify-between gap-3" style="border-radius:10px;border-color:#6B3FB4;background:linear-gradient(100deg,rgba(107,63,180,.18),rgba(214,48,110,.12));">
+            <div>
+              <span class="block text-[11px] uppercase tracking-[0.3em] text-white/50">les desserts</span>
+              <span class="block poster text-2xl text-white leading-none mt-1">À PARTAGER… OU PAS</span>
+            </div>
+            <span class="poster text-4xl shrink-0" style="color:#F06AA0;">3,99€</span>
+          </div>
+        </div>
+
+      </div>
+
     </div>
-    <div class="text-xs opacity-60">
-      Maquette par <a href="https://kliqweb.fr" target="_blank" class="text-yellow font-bold hover:underline">Kliq</a>
+  </section>
+
+  <!-- ============== 07 — COMMANDER / TROUVER ============== -->
+  <section id="commander" class="relative pt-16 pb-20 sm:pt-24 sm:pb-28 overflow-hidden border-t border-white/8 bg-ink2">
+    <div class="absolute left-0 right-0 top-0 h-[3px] bg-tomato"></div>
+
+    <div class="relative mx-auto max-w-[1240px] px-5 sm:px-7">
+
+      <!-- header -->
+      <div class="reveal flex items-end justify-between gap-5 border-b-2 border-white/12 pb-7 mb-10 sm:mb-14">
+        <div>
+          <h2 class="menu-it text-4xl sm:text-6xl">on commande ?</h2>
+          <p class="mt-2 text-[12px] uppercase tracking-wider text-white/45">Sur place · à emporter · en livraison</p>
+        </div>
+        <span class="poster text-[clamp(3rem,8vw,6rem)] leading-[0.7] text-white/14">07</span>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
+
+        <!-- LEFT : CTAs -->
+        <div class="reveal">
+          <!-- adresse -->
+          <div class="flex items-start gap-3 mb-7">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="#E63946" class="shrink-0 mt-0.5" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"/></svg>
+            <span class="poster text-2xl sm:text-3xl text-white leading-[0.95]">63 RUE MAXIME GUILLOT<br><span class="text-white/60">21300 CHENÔVE</span></span>
+          </div>
+
+          <!-- tel géant -->
+          <p class="text-[11px] uppercase tracking-[0.3em] text-white/45 mb-1">Commande directe</p>
+          <a href="tel:0956657456" class="poster block text-[clamp(2.2rem,8vw,4.5rem)] leading-none text-tomato hover:text-magenta transition-colors">09 56 65 74 56</a>
+          <a href="tel:0767471992" class="inline-block mt-2 text-[15px] font-bold text-white/70 hover:text-white transition-colors">ou 07 67 47 19 92</a>
+
+          <!-- delivery buttons -->
+          <div class="flex flex-wrap gap-3 mt-7">
+            <a href="#" class="inline-flex items-center gap-2.5 bg-tomato px-6 py-3.5 poster text-lg uppercase text-white hover:opacity-90 transition-opacity" style="border-radius:3px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 2h14l1.6 4H3.4L5 2zM4 8h16v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8zm5 3v3h6v-3H9z"/></svg>
+              Uber Eats
+            </a>
+            <a href="#" class="inline-flex items-center gap-2.5 px-6 py-3.5 poster text-lg uppercase text-white hover:opacity-90 transition-opacity" style="border-radius:3px;background:#D6306E;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 2h14l1.6 4H3.4L5 2zM4 8h16v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8zm5 3v3h6v-3H9z"/></svg>
+              Deliveroo
+            </a>
+          </div>
+          <p class="mt-4 text-[13.5px] text-white/55">Livraison <span class="line-through decoration-white/40">3,90€</span> <span class="text-white font-bold">offerte dès 20€</span> · Chenôve & alentours.</p>
+          <p class="mt-1 text-[11.5px] text-white/40 italic">Livraison possible selon la disponibilité d'un livreur.</p>
+
+          <!-- horaires -->
+          <div class="mt-7 border-t border-white/10 pt-5">
+            <p class="text-[11px] uppercase tracking-[0.3em] text-white/45 mb-1.5">Horaires</p>
+            <p class="poster text-xl text-white">LUN — DIM <span class="text-white/55 text-base">·</span> 11h-14h <span class="text-white/55 text-base">·</span> 18h-22h</p>
+            <p class="font-hand text-lg text-white/40 mt-1">(horaires à confirmer)</p>
+          </div>
+        </div>
+
+        <!-- RIGHT : map -->
+        <div class="reveal relative">
+          <span class="absolute -top-4 right-4 z-10 font-hand text-2xl text-white rotate-3 hidden sm:flex items-center gap-1">on est là
+            <svg width="34" height="30" viewBox="0 0 42 38" fill="none" class="text-tomato"><path d="M3 4c10 14 24 19 33 26" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M30 23l8 8-11 1" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <div class="overflow-hidden border-[3px]" style="border-radius:6px;border-color:#E63946;">
+            <iframe title="Carte — Crousty Bowls, 63 Rue Maxime Guillot, Chenôve" src="https://www.google.com/maps?q=63+Rue+Maxime+Guillot+21300+Chen%C3%B4ve&output=embed" width="100%" height="420" style="border:0;display:block;filter:grayscale(0.2) contrast(1.05);" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+
+      </div>
     </div>
-  </div>
-</footer>
+  </section>
 
-<!-- SCRIPTS -->
-<script type="module">
-let THREE;
-try {
-  THREE = await import('https://unpkg.com/three@0.160.0/build/three.module.js');
-} catch (e) {
-  console.error('Three.js failed to load:', e);
-  document.getElementById('hero-fallback').classList.remove('hidden');
-  document.getElementById('hero-fallback').classList.add('flex');
-  throw e;
-}
+  <!-- ============== FOOTER ============== -->
+  <footer class="relative border-t-2 border-white/10 bg-ink">
+    <div class="mx-auto max-w-[1240px] px-5 sm:px-7 py-12 sm:py-14">
+      <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-10">
 
-// ===== THREE.JS SCENE =====
-const container = document.getElementById('hero-canvas');
-const w = container.clientWidth;
-const h = container.clientHeight;
+        <div class="max-w-sm">
+          <div class="flex items-center gap-3">
+            <svg class="h-14 w-14 shrink-0" aria-label="Logo Crousty Bowls" role="img"><use href="#cb-logo"/></svg>
+            <span class="poster text-3xl text-white leading-none">CROUSTY<br>BOWLS</span>
+          </div>
+          <p class="mt-4 text-[13.5px] text-white/55 leading-relaxed">Street-food croustillante à Chenôve, aux portes de Dijon. Riz, tenders, sauce maison — et rien d'autre.</p>
+          <a href="https://instagram.com/crousty_bowls_chenove" target="_blank" rel="noopener" class="inline-flex items-center gap-2 mt-5 text-[14px] font-bold text-white hover:text-tomato transition-colors">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.1.4.3 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.1-1 .3-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.1-.4-.3-1-.4-2.2-.1-1.3-.1-1.7-.1-4.9s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.1 1-.3 2.2-.4 1.3-.1 1.7-.1 4.9-.1zm0 3.5a6.3 6.3 0 1 0 0 12.6 6.3 6.3 0 0 0 0-12.6zm0 2.2a4.1 4.1 0 1 1 0 8.2 4.1 4.1 0 0 1 0-8.2zm6.5-2.4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/></svg>
+            @crousty_bowls_chenove
+          </a>
+        </div>
 
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 100);
-camera.position.set(0, 4, 7);
-camera.lookAt(0, 0, 0);
+        <div class="flex flex-col sm:flex-row gap-10 sm:gap-16">
+          <div>
+            <p class="text-[11px] uppercase tracking-[0.3em] text-white/40 mb-3">La carte</p>
+            <ul class="space-y-2 text-[14px] text-white/70">
+              <li><a href="#crousty" class="hover:text-white transition-colors">Les Crousty</a></li>
+              <li><a href="#poutine" class="hover:text-white transition-colors">Les Poutines</a></li>
+              <li><a href="#yakisoba" class="hover:text-white transition-colors">Yakisoba</a></li>
+              <li><a href="#sushis" class="hover:text-white transition-colors">Les Sushis</a></li>
+              <li><a href="#boissons" class="hover:text-white transition-colors">Les Boissons</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="text-[11px] uppercase tracking-[0.3em] text-white/40 mb-3">Infos</p>
+            <ul class="space-y-2 text-[14px] text-white/70">
+              <li><a href="#commander" class="hover:text-white transition-colors">Commander</a></li>
+              <li><a href="tel:0956657456" class="hover:text-white transition-colors">09 56 65 74 56</a></li>
+              <li>63 Rue Maxime Guillot, Chenôve</li>
+              <li><a href="#" class="hover:text-white transition-colors">Mentions légales</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-renderer.setSize(w, h);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-container.appendChild(renderer.domElement);
+      <div class="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-[12.5px] text-white/40">
+        <span>© 2026 Crousty Bowls Chenôve. Tous droits réservés.</span>
+        <a href="https://kliqweb.fr" target="_blank" rel="noopener" class="hover:text-white/70 transition-colors">Site par Kliq</a>
+      </div>
+    </div>
+  </footer>
 
-// Lights (warmer for yellow bg)
-scene.add(new THREE.AmbientLight(0xfff5e0, 0.6));
-const keyLight = new THREE.DirectionalLight(0xfff0c0, 1.8);
-keyLight.position.set(5, 8, 5);
-keyLight.castShadow = true;
-keyLight.shadow.mapSize.set(1024, 1024);
-scene.add(keyLight);
-const rimLight = new THREE.DirectionalLight(0xff5050, 0.6);
-rimLight.position.set(-5, 3, -5);
-scene.add(rimLight);
-const fillLight = new THREE.PointLight(0xffc800, 1.2, 15);
-fillLight.position.set(0, 5, 3);
-scene.add(fillLight);
+  <!-- ============== SCRIPTS ============== -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    // Mobile menu
+    const burger=document.getElementById('burger'), menu=document.getElementById('mobileMenu'),
+          iOpen=document.getElementById('burger-open'), iClose=document.getElementById('burger-close');
+    function closeMenu(){ menu.classList.remove('open'); iOpen.classList.remove('hidden'); iClose.classList.add('hidden'); }
+    burger.addEventListener('click',()=>{ const o=menu.classList.toggle('open'); iOpen.classList.toggle('hidden',o); iClose.classList.toggle('hidden',!o); });
+    document.querySelectorAll('.mobmenu-link').forEach(a=>a.addEventListener('click',closeMenu));
 
-const bowl = new THREE.Group();
+    // Reveals via manual scroll check (reliable everywhere), parallax via GSAP
+    function initAnims(){
+      const reveals=Array.from(document.querySelectorAll('.reveal'));
+      function show(el){ el.style.setProperty('opacity','1','important'); el.style.setProperty('transform','none','important'); el.dataset.shown='1'; }
+      function check(){ const vh=window.innerHeight||document.documentElement.clientHeight;
+        for(const el of reveals){ if(el.dataset.shown) continue; const r=el.getBoundingClientRect(); if(r.top<vh*0.92 && r.bottom>0) show(el); } }
+      check();
+      window.addEventListener('scroll',check,{passive:true});
+      window.addEventListener('resize',check);
+      setTimeout(()=>reveals.forEach(el=>{ if(!el.dataset.shown) show(el); }),2500);
 
-// Container (red bowl this time, more pop)
-const containerMat = new THREE.MeshStandardMaterial({
-  color: 0xE63946, roughness: 0.5, metalness: 0.1
-});
-const containerMesh = new THREE.Mesh(
-  new THREE.CylinderGeometry(2.2, 1.9, 0.8, 32),
-  containerMat
-);
-containerMesh.castShadow = true;
-containerMesh.receiveShadow = true;
-bowl.add(containerMesh);
-
-// Black rim
-const rim = new THREE.Mesh(
-  new THREE.TorusGeometry(2.2, 0.08, 8, 32),
-  new THREE.MeshStandardMaterial({ color: 0x0F0F0F, roughness: 0.5 })
-);
-rim.rotation.x = Math.PI / 2;
-rim.position.y = 0.4;
-bowl.add(rim);
-
-// Rice
-const riceMat = new THREE.MeshStandardMaterial({ color: 0xFFF7D6, roughness: 0.7 });
-for (let i = 0; i < 60; i++) {
-  const r = 0.08 + Math.random() * 0.04;
-  const rice = new THREE.Mesh(new THREE.SphereGeometry(r, 8, 8), riceMat);
-  const angle = Math.random() * Math.PI * 2;
-  const radius = Math.random() * 1.7;
-  rice.position.set(Math.cos(angle) * radius, 0.45 + Math.random() * 0.3, Math.sin(angle) * radius);
-  rice.castShadow = true;
-  bowl.add(rice);
-}
-
-// Chicken (yellow-gold)
-const chickenMat = new THREE.MeshStandardMaterial({ color: 0xF4B400, roughness: 0.7 });
-for (let i = 0; i < 6; i++) {
-  const chicken = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.4, 0.6), chickenMat);
-  const angle = (i / 6) * Math.PI * 2 + Math.random() * 0.5;
-  chicken.position.set(Math.cos(angle) * 1.1, 0.75 + Math.random() * 0.2, Math.sin(angle) * 1.1);
-  chicken.rotation.y = Math.random() * Math.PI;
-  chicken.rotation.x = (Math.random() - 0.5) * 0.3;
-  chicken.castShadow = true;
-  bowl.add(chicken);
-}
-
-// Sauce (white drizzle torusknot)
-const sauce = new THREE.Mesh(
-  new THREE.TorusKnotGeometry(0.8, 0.06, 64, 8, 2, 3),
-  new THREE.MeshStandardMaterial({ color: 0xFFFFFF, roughness: 0.3 })
-);
-sauce.position.y = 1.1;
-sauce.rotation.x = Math.PI / 2;
-sauce.castShadow = true;
-bowl.add(sauce);
-
-// Fried onions
-const onionMat = new THREE.MeshStandardMaterial({ color: 0xFFD83D, roughness: 0.5 });
-for (let i = 0; i < 15; i++) {
-  const onion = new THREE.Mesh(new THREE.TorusGeometry(0.08, 0.03, 6, 8), onionMat);
-  const angle = Math.random() * Math.PI * 2;
-  const radius = Math.random() * 1.6;
-  onion.position.set(Math.cos(angle) * radius, 0.9 + Math.random() * 0.3, Math.sin(angle) * radius);
-  onion.rotation.x = Math.random() * Math.PI;
-  onion.rotation.z = Math.random() * Math.PI;
-  onion.castShadow = true;
-  bowl.add(onion);
-}
-
-bowl.position.set(0, -0.3, 0);
-bowl.scale.set(1.3, 1.3, 1.3);
-scene.add(bowl);
-
-const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
-window.addEventListener('mousemove', (e) => {
-  mouse.tx = (e.clientX / window.innerWidth - 0.5) * 0.5;
-  mouse.ty = (e.clientY / window.innerHeight - 0.5) * 0.3;
-});
-
-let time = 0;
-function animate() {
-  requestAnimationFrame(animate);
-  time += 0.005;
-  mouse.x += (mouse.tx - mouse.x) * 0.05;
-  mouse.y += (mouse.ty - mouse.y) * 0.05;
-  bowl.rotation.y = time * 0.4 + mouse.x;
-  bowl.rotation.x = Math.sin(time * 0.5) * 0.05 + mouse.y * 0.3;
-  bowl.position.y = -0.3 + Math.sin(time) * 0.1;
-  sauce.rotation.z = time * 0.8;
-  renderer.render(scene, camera);
-}
-animate();
-
-window.addEventListener('resize', () => {
-  const nw = container.clientWidth;
-  const nh = container.clientHeight;
-  camera.aspect = nw / nh;
-  camera.updateProjectionMatrix();
-  renderer.setSize(nw, nh);
-});
-
-// ===== REVEAL ANIMATIONS =====
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-// Hero word reveal on load
-setTimeout(() => {
-  document.querySelectorAll('section:first-of-type .word-reveal').forEach((el, i) => {
-    setTimeout(() => el.classList.add('in'), i * 120);
-  });
-  document.querySelectorAll('section:first-of-type .reveal').forEach((el, i) => {
-    setTimeout(() => el.classList.add('visible'), 200 + i * 100);
-  });
-}, 100);
-</script>
-
+      if(typeof gsap!=='undefined'){
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('[data-parallax]').forEach(el=>{
+          gsap.to(el,{ yPercent:-7, ease:'none', scrollTrigger:{ trigger:el, start:'top bottom', end:'bottom top', scrub:true } });
+        });
+      }
+    }
+    (document.readyState==='complete'||document.readyState==='interactive') ? initAnims() : document.addEventListener('DOMContentLoaded',initAnims);
+  </script>
 </body>
 </html>
