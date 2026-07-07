@@ -114,7 +114,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Caveat:wght@600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -137,12 +137,12 @@
   </script>
 
   <style>
-    html{ background:#0A0A0F; }
+    html{ background:#0A0A0F; scroll-padding-top:76px; }
     body{ background:#0A0A0F; }
     body{ font-family:'Manrope',system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
 
     .poster{ font-family:'Anton',Impact,sans-serif; letter-spacing:.01em; }
-    .menu-it{ font-style:italic; font-weight:800; letter-spacing:-.02em; text-transform:lowercase; } /* brand "les crousty" look */
+    .menu-it{ font-family:'Instrument Serif','Georgia',serif; font-style:italic; font-weight:400; letter-spacing:-.02em; text-transform:none; } /* editorial magazine chic */
 
     /* halftone print dots — variantes par section (jamais de jaune) */
     .halftone   { background-image:radial-gradient(circle, rgba(214,48,110,.18) 1.1px, transparent 1.5px); background-size:15px 15px; } /* magenta */
@@ -199,7 +199,77 @@
     .mobile-menu{ transition:max-height .4s ease, opacity .3s ease; max-height:0; opacity:0; overflow:hidden; }
     .mobile-menu.open{ max-height:460px; opacity:1; }
 
-    @media (prefers-reduced-motion:reduce){ .reveal{opacity:1!important;transform:none!important;} .marquee-track,.wisp{animation:none;} }
+    /* ============== CINEMATIC UPGRADES ============== */
+
+    /* Char reveal (split-text) */
+    .char-reveal .char{ display:inline-block; opacity:0; transform:translateY(80%) rotate(4deg); transition:none; will-change:transform,opacity; }
+
+    /* Clip-path masks for cinematic section reveals */
+    .clip-in{ clip-path:inset(0 100% 0 0); transition:clip-path 1.05s cubic-bezier(.7,0,.15,1); }
+    .clip-in.shown{ clip-path:inset(0 0 0 0); }
+
+    /* Sauce drip SVG on Dynamite feature */
+    @keyframes drip{
+      0%{ stroke-dashoffset:400; }
+      60%{ stroke-dashoffset:0; }
+      100%{ stroke-dashoffset:0; }
+    }
+    .drip-path{ stroke-dasharray:400; stroke-dashoffset:400; animation:drip 2.6s cubic-bezier(.6,0,.4,1) .3s forwards; }
+
+    /* Sauce splash particles floating on hero */
+    @keyframes floaty{
+      0%,100%{ transform:translateY(0) rotate(0); }
+      50%{ transform:translateY(-14px) rotate(6deg); }
+    }
+    .float-a{ animation:floaty 5.2s ease-in-out infinite; }
+    .float-b{ animation:floaty 6.8s ease-in-out infinite .8s; }
+    .float-c{ animation:floaty 7.5s ease-in-out infinite 1.6s; }
+
+    /* Halftone slow drift */
+    @keyframes drift{ from{ background-position:0 0;} to{ background-position:60px 60px;} }
+    .halftone-drift{ animation:drift 22s linear infinite; }
+
+    /* Marquee reverse variant */
+    @keyframes marquee-rev{ from{transform:translateX(-50%);} to{transform:translateX(0);} }
+    .marquee-rev{ display:inline-flex; white-space:nowrap; animation:marquee-rev 26s linear infinite; }
+
+    /* Poster food porn : hover / active overlay */
+    .poster-card{ perspective:1200px; }
+    .poster-card .poster-inner{ transition:transform .8s cubic-bezier(.16,.8,.3,1), box-shadow .6s ease; will-change:transform; }
+    .poster-card:hover .poster-inner{ transform:rotateX(2deg) rotateY(-3deg) translateZ(0); box-shadow:0 60px 100px -30px rgba(0,0,0,.85), 0 0 0 2px rgba(230,57,70,.35); }
+    .poster-card .poster-title{ transition:transform .55s cubic-bezier(.2,.8,.2,1), letter-spacing .6s ease; }
+    .poster-card:hover .poster-title{ transform:translateY(-6px); letter-spacing:.02em; }
+    .poster-card .poster-num{ transition:transform .8s cubic-bezier(.2,.8,.2,1), opacity .6s ease; }
+    .poster-card:hover .poster-num{ transform:scale(2.3) translateX(-8%); opacity:.14; }
+
+    /* Section watermark that slides in when section pins */
+    .section-wm{ position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:1; }
+    .section-wm .wm-track{ position:absolute; top:50%; left:0; transform:translateY(-50%) translateX(100%);
+      font-family:'Anton',Impact,sans-serif; font-size:clamp(9rem,22vw,22rem); line-height:.75;
+      letter-spacing:-.03em; white-space:nowrap;
+      -webkit-text-stroke:2px rgba(230,57,70,.25); color:transparent;
+      transition:transform 1.4s cubic-bezier(.7,0,.15,1); }
+    .section-wm.on .wm-track{ transform:translateY(-50%) translateX(-30%); }
+
+    /* Flip prices */
+    @keyframes flip-in{
+      0%{ transform:rotateX(-90deg); opacity:0; }
+      100%{ transform:rotateX(0); opacity:1; }
+    }
+    .flip-price{ display:inline-block; transform-origin:50% 100%; animation:flip-in .7s cubic-bezier(.3,1.4,.5,1) both; }
+
+    /* Bowl in hero: multi-layer parallax stack */
+    .hero-stack{ position:relative; }
+    .hero-stack > *{ will-change:transform; }
+
+    /* Sauce blob decorations */
+    .blob{ position:absolute; pointer-events:none; opacity:.7; }
+
+    @media (prefers-reduced-motion:reduce){
+      .reveal{opacity:1!important;transform:none!important;}
+      .marquee-track,.marquee-rev,.wisp,.float-a,.float-b,.float-c,.halftone-drift,.drip-path{animation:none!important;}
+      .clip-in{ clip-path:none!important; }
+    }
   </style>
 </head>
 
@@ -207,6 +277,23 @@
 
   <!-- ============== GRAIN PAPIER GLOBAL (texture impression carte) ============== -->
   <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- ============== SVG DEFS : sauce splash particles ============== -->
+  <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden;">
+    <symbol id="splash-1" viewBox="0 0 60 60">
+      <path d="M30 6c3 6 8 8 12 14 3 4 3 10-1 14-5 6-14 6-19 1-5-5-6-13-1-19 3-3 5-6 9-10z" fill="currentColor"/>
+      <circle cx="46" cy="18" r="2.5" fill="currentColor"/>
+      <circle cx="14" cy="42" r="3.5" fill="currentColor"/>
+      <circle cx="52" cy="42" r="2" fill="currentColor"/>
+    </symbol>
+    <symbol id="splash-2" viewBox="0 0 80 40">
+      <path d="M4 20c8-14 22-14 32-6 8 6 18 2 26-4-2 8-10 16-20 16-8 0-14-4-20-2-6 2-12 4-18-4z" fill="currentColor"/>
+    </symbol>
+    <symbol id="chili" viewBox="0 0 60 60">
+      <path d="M14 8c6-2 12 2 14 8 4-2 10-2 12 2 4 8-2 18-10 24-10 8-24 8-30-2-4-6 0-14 6-18 2-6 4-12 8-14z" fill="currentColor"/>
+      <path d="M14 8c2-4 6-6 10-6-2 4-6 6-10 6z" fill="#0A0A0F"/>
+    </symbol>
+  </svg>
 
   <!-- ============== LOGO SPRITE (CB monogramme + 2 paires de baguettes, anneau conique) ============== -->
   <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden;">
@@ -297,10 +384,14 @@
 
   <!-- ============== HERO ============== -->
   <section class="relative min-h-[100svh] flex items-center pt-[60px] overflow-hidden">
-    <div class="pointer-events-none absolute inset-0 halftone opacity-50"></div>
+    <div class="pointer-events-none absolute inset-0 halftone halftone-drift opacity-50"></div>
     <div class="pointer-events-none absolute -top-32 -left-40 h-[460px] w-[460px] rounded-full blur-[150px] opacity-[0.16]" style="background:radial-gradient(circle,#D6306E,transparent 70%);"></div>
     <div class="pointer-events-none absolute bottom-0 right-0 h-[520px] w-[520px] rounded-full blur-[160px] opacity-[0.16]" style="background:radial-gradient(circle,#3B3BB8,transparent 70%);"></div>
-    <svg class="pointer-events-none absolute -left-8 bottom-4 h-[230px] w-[230px] opacity-[0.05] hidden md:block" aria-hidden="true"><use href="#cb-logo"/></svg>
+    <!-- ============== HERO 3D CANVAS (Three.js) — fond ambiant + anneau CB qui tourne ============== -->
+    <canvas id="hero-3d" class="absolute inset-0 h-full w-full" aria-hidden="true"></canvas>
+
+    <!-- radial glow devant le canvas 3D pour signer la palette -->
+    <div class="pointer-events-none absolute inset-0" style="background:radial-gradient(ellipse at 50% 40%, transparent 30%, rgba(10,10,15,.55) 75%);"></div>
 
     <div class="relative mx-auto w-full max-w-[1240px] px-5 sm:px-7">
       <div class="grid lg:grid-cols-12 gap-y-10 items-center">
@@ -313,9 +404,9 @@
             <span class="text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.28em] text-white/60">Street-food croustillante · Chenôve, aux portes de Dijon</span>
           </div>
 
-          <h1 class="reveal poster leading-[0.95] text-[clamp(2.8rem,12vw,9.5rem)]">
-            <span class="block"><span class="ink-c inline-block pb-[0.08em]">CROUSTY</span></span>
-            <span class="block -mt-1 sm:-mt-2"><span class="ink-b inline-block pb-[0.08em]">BOWLS</span></span>
+          <h1 class="poster leading-[0.95] text-[clamp(2.8rem,12vw,9.5rem)] char-reveal" data-splittext>
+            <span class="block"><span class="ink-c inline-block pb-[0.08em]" data-split="CROUSTY"></span></span>
+            <span class="block -mt-1 sm:-mt-2"><span class="ink-b inline-block pb-[0.08em]" data-split="BOWLS"></span></span>
           </h1>
 
           <p class="reveal mt-6 max-w-[30rem] text-lg sm:text-2xl font-medium text-white/80 leading-snug">
@@ -338,26 +429,41 @@
           </div>
         </div>
 
-        <!-- RIGHT: bowl bleeding off -->
+        <!-- RIGHT: bowl bleeding off, multi-layer stack -->
         <div class="reveal lg:col-span-5 order-1 lg:order-2 relative">
-          <div class="relative max-w-[420px] mx-auto lg:max-w-none lg:mx-0 lg:-mr-24 xl:-mr-32">
+          <div class="relative max-w-[420px] mx-auto lg:max-w-none lg:mx-0 lg:-mr-24 xl:-mr-32 hero-stack">
+
+            <!-- back layer : big disc parallax -->
+            <div data-parallax data-speed="-8" class="absolute -top-4 -right-4 h-[85%] w-[85%] rounded-full -z-0" style="background:radial-gradient(circle at 40% 40%, rgba(230,57,70,.55), rgba(214,48,110,.15) 55%, transparent 70%); filter:blur(4px);"></div>
+
             <!-- steam -->
             <div class="wisp" style="left:38%; animation-delay:0s;"></div>
             <div class="wisp" style="left:50%; animation-delay:.9s; height:58px;"></div>
             <div class="wisp" style="left:60%; animation-delay:1.7s;"></div>
 
-            <div data-parallax class="relative aspect-square w-full overflow-hidden border-[3px] border-white/12" style="border-radius:6px; box-shadow:0 40px 80px -30px rgba(0,0,0,.8);">
+            <!-- MAIN IMAGE : bowl -->
+            <div data-parallax data-speed="-14" class="relative aspect-square w-full overflow-hidden border-[3px] border-white/12" style="border-radius:6px; box-shadow:0 40px 80px -30px rgba(0,0,0,.8);">
               <img src="https://placehold.co/1000x1000/0A0A0F/E63946?text=BOWL+SIGNATURE" alt="Bowl Crousty signature — riz, tenders croustillants, sauce maison" loading="eager" decoding="async" class="h-full w-full object-cover" />
+              <!-- sauce drip SVG overlay (dessinée au load) -->
+              <svg class="pointer-events-none absolute inset-x-0 top-0 w-full" viewBox="0 0 400 220" aria-hidden="true">
+                <path class="drip-path" d="M20 4 C 40 60, 70 40, 90 90 S 150 130, 170 70 S 240 30, 260 100 S 330 150, 350 80 S 400 60, 400 30" stroke="#E63946" stroke-width="7" fill="none" stroke-linecap="round"/>
+              </svg>
             </div>
 
-            <!-- price sticker, rotated -->
-            <div class="absolute -bottom-5 -left-4 sm:left-2 rotate-[-7deg] bg-ink border-2 border-tomato px-4 py-2" style="border-radius:4px;">
+            <!-- FRONT floating badges : parallax vers l'avant -->
+            <!-- price sticker -->
+            <div data-parallax data-speed="-22" class="absolute -bottom-5 -left-4 sm:left-2 rotate-[-7deg] bg-ink border-2 border-tomato px-4 py-2 z-10" style="border-radius:4px;">
               <span class="block text-[10px] uppercase tracking-widest text-white/50 leading-none">le bowl dès</span>
-              <span class="poster text-3xl text-tomato leading-none">9,90€</span>
+              <span class="poster text-3xl text-tomato leading-none flip-price">9,90€</span>
             </div>
 
-            <!-- handwritten annotation : texte en haut-droite, flèche descend vers le bowl -->
-            <div class="absolute -top-1 right-3 sm:right-4 flex flex-col items-end gap-0.5">
+            <!-- floating chili badge -->
+            <div data-parallax data-speed="-30" class="absolute -top-4 -left-3 sm:-left-8 rotate-[8deg] hidden sm:block z-10">
+              <svg width="58" height="58" viewBox="0 0 60 60" style="color:#E63946;" aria-hidden="true"><use href="#chili"/></svg>
+            </div>
+
+            <!-- handwritten annotation : texte en haut-droite, flèche descend vers le bowl (desktop uniquement — cache par la nav sur mobile) -->
+            <div data-parallax data-speed="-26" class="absolute -top-1 right-3 sm:right-4 hidden sm:flex flex-col items-end gap-0.5 z-10">
               <span class="font-hand text-2xl text-white -rotate-6 leading-none whitespace-nowrap">notre best-seller</span>
               <svg width="44" height="44" viewBox="0 0 44 44" fill="none" class="text-tomato mr-6 -mt-1" aria-hidden="true">
                 <path d="M40 4 C 36 18, 22 30, 8 40" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" fill="none"/>
@@ -371,44 +477,206 @@
     </div>
   </section>
 
-  <!-- ============== BANDEAU LIVRAISON (flat, poster) ============== -->
-  <div class="relative overflow-hidden bg-indigo py-3 border-y-2 border-black/30">
-    <div class="marquee-track">
-      <div class="poster flex items-center text-[17px] sm:text-[19px] uppercase tracking-wide text-white">
-        <span class="px-7">Livraison <span class="line-through decoration-2 decoration-white/55 opacity-70">3,90€</span> offerte dès 20€</span><span class="text-tomato px-2">●</span>
-        <span class="px-7">Uber Eats</span><span class="text-tomato px-2">●</span>
-        <span class="px-7">Deliveroo</span><span class="text-tomato px-2">●</span>
-        <span class="px-7">À emporter & sur place</span><span class="text-tomato px-2">●</span>
-        <span class="px-7">Chenôve & autour de Dijon</span><span class="text-tomato px-2">●</span>
+  <!-- ============== SIGNATURE — 3 formats phares (intro-porte du menu) ============== -->
+  <section id="signature" class="relative pt-16 pb-10 sm:pt-20 sm:pb-14 overflow-hidden">
+    <div class="pointer-events-none absolute inset-0 halftone-t opacity-15" aria-hidden="true"></div>
+    <div class="relative mx-auto max-w-[1240px] px-5 sm:px-7">
+
+      <!-- kicker minimal -->
+      <div class="reveal flex items-end justify-between gap-4 mb-9 sm:mb-12">
+        <div class="flex items-center gap-3">
+          <span class="block h-[2px] w-10 bg-tomato"></span>
+          <span class="text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.28em] text-white/60">Trois façons de manger croustillant</span>
+        </div>
+        <a href="#crousty" class="hidden sm:inline-flex items-center gap-1.5 text-[12px] font-bold uppercase tracking-wider text-white/60 hover:text-white transition-colors">Voir la carte →</a>
       </div>
-      <div class="poster flex items-center text-[17px] sm:text-[19px] uppercase tracking-wide text-white" aria-hidden="true">
-        <span class="px-7">Livraison <span class="line-through decoration-2 decoration-white/55 opacity-70">3,90€</span> offerte dès 20€</span><span class="text-tomato px-2">●</span>
-        <span class="px-7">Uber Eats</span><span class="text-tomato px-2">●</span>
-        <span class="px-7">Deliveroo</span><span class="text-tomato px-2">●</span>
-        <span class="px-7">À emporter & sur place</span><span class="text-tomato px-2">●</span>
-        <span class="px-7">Chenôve & autour de Dijon</span><span class="text-tomato px-2">●</span>
+
+      <!-- 3 grandes cards visuelles — poster food porn -->
+      <div class="grid md:grid-cols-3 gap-5 sm:gap-7">
+
+        <!-- Le Bowl -->
+        <a href="#crousty" data-cursor class="poster-card group relative aspect-[4/5] block clip-in reveal">
+          <div class="poster-inner relative h-full w-full overflow-hidden border-[3px] border-white/12" style="border-radius:8px;">
+            <!-- numéro géant en fond -->
+            <span aria-hidden="true" class="poster-num absolute -top-6 -left-4 poster text-[16rem] leading-[0.75] text-white/8 pointer-events-none select-none">01</span>
+            <img src="https://placehold.co/700x900/0A0A0F/E63946?text=BOWL" alt="Bowl croustillant signature" loading="lazy" decoding="async" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+            <div class="absolute inset-0" style="background:linear-gradient(to top, rgba(10,10,15,.95) 12%, rgba(10,10,15,.05) 62%);"></div>
+            <div class="absolute inset-x-0 top-0 h-1.5 bg-tomato transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+            <span class="absolute top-4 left-4 poster text-[13px] px-2.5 py-1 bg-ink border-2 border-tomato text-tomato leading-none z-10" style="border-radius:3px;">01</span>
+            <!-- splash particle sur hover -->
+            <svg class="absolute top-6 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rotate-12" style="width:44px; height:44px; color:#E63946;" aria-hidden="true"><use href="#splash-1"/></svg>
+            <div class="absolute bottom-0 inset-x-0 p-5 sm:p-6 z-10">
+              <h3 class="poster-title poster text-4xl sm:text-5xl text-white leading-[0.85]">LE BOWL</h3>
+              <p class="mt-2 text-[13px] text-white/70">riz · sauce maison · croustillant</p>
+              <p class="mt-3 poster text-tomato text-2xl leading-none">dès 9,90€</p>
+            </div>
+          </div>
+        </a>
+
+        <!-- La Poutine -->
+        <a href="#poutine" data-cursor class="poster-card group relative aspect-[4/5] block md:mt-8 clip-in reveal" style="transition-delay:.08s;">
+          <div class="poster-inner relative h-full w-full overflow-hidden border-[3px] border-white/12" style="border-radius:8px;">
+            <span aria-hidden="true" class="poster-num absolute -top-6 -left-4 poster text-[16rem] leading-[0.75] text-white/8 pointer-events-none select-none">02</span>
+            <img src="https://placehold.co/700x900/0A0A0F/D6306E?text=POUTINE" alt="Bowl poutine cheddar" loading="lazy" decoding="async" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+            <div class="absolute inset-0" style="background:linear-gradient(to top, rgba(10,10,15,.95) 12%, rgba(10,10,15,.05) 62%);"></div>
+            <div class="absolute inset-x-0 top-0 h-1.5 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" style="background:#D6306E;"></div>
+            <span class="absolute top-4 left-4 poster text-[13px] px-2.5 py-1 bg-ink border-2 leading-none z-10" style="border-radius:3px;border-color:#D6306E;color:#F06AA0;">02</span>
+            <svg class="absolute top-6 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -rotate-6" style="width:60px; height:30px; color:#D6306E;" aria-hidden="true"><use href="#splash-2"/></svg>
+            <div class="absolute bottom-0 inset-x-0 p-5 sm:p-6 z-10">
+              <h3 class="poster-title poster text-4xl sm:text-5xl text-white leading-[0.85]">LA POUTINE</h3>
+              <p class="mt-2 text-[13px] text-white/70">frites · cheddar fondu · mozza</p>
+              <p class="mt-3 poster text-2xl leading-none" style="color:#F06AA0;">9,50€</p>
+            </div>
+          </div>
+        </a>
+
+        <!-- Le Yakisoba -->
+        <a href="#yakisoba" data-cursor class="poster-card group relative aspect-[4/5] block clip-in reveal" style="transition-delay:.16s;">
+          <div class="poster-inner relative h-full w-full overflow-hidden border-[3px] border-white/12" style="border-radius:8px;">
+            <span aria-hidden="true" class="poster-num absolute -top-6 -left-4 poster text-[16rem] leading-[0.75] text-white/8 pointer-events-none select-none">03</span>
+            <img src="https://placehold.co/700x900/0A0A0F/3B3BB8?text=YAKISOBA" alt="Nouilles yakisoba sautées au wok" loading="lazy" decoding="async" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+            <div class="absolute inset-0" style="background:linear-gradient(to top, rgba(10,10,15,.95) 12%, rgba(10,10,15,.05) 62%);"></div>
+            <div class="absolute inset-x-0 top-0 h-1.5 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" style="background:#3B3BB8;"></div>
+            <span class="absolute top-4 left-4 poster text-[13px] px-2.5 py-1 bg-ink border-2 leading-none z-10" style="border-radius:3px;border-color:#3B3BB8;color:#6F6FE0;">03</span>
+            <svg class="absolute top-6 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rotate-3" style="width:44px; height:44px; color:#3B3BB8;" aria-hidden="true"><use href="#chili"/></svg>
+            <div class="absolute bottom-0 inset-x-0 p-5 sm:p-6 z-10">
+              <h3 class="poster-title poster text-4xl sm:text-5xl text-white leading-[0.85]">YAKISOBA</h3>
+              <p class="mt-2 text-[13px] text-white/70">nouilles wok · légumes · garniture au choix</p>
+              <p class="mt-3 poster text-2xl leading-none" style="color:#6F6FE0;">9,90€</p>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== COMMANDER / TROUVER (position 2 — action prioritaire dès l'arrivée) ============== -->
+  <section id="commander" class="relative pt-16 pb-20 sm:pt-24 sm:pb-28 overflow-hidden border-t border-white/8 bg-ink2">
+    <div class="absolute left-0 right-0 top-0 h-[3px] bg-tomato"></div>
+
+    <!-- background : halftone indigo + watermark logo CB en haut-gauche -->
+    <div class="pointer-events-none absolute inset-0 halftone-i opacity-20" aria-hidden="true"></div>
+    <svg class="pointer-events-none absolute -left-20 -top-24 h-[360px] w-[360px] opacity-[0.05] hidden md:block" aria-hidden="true"><use href="#cb-logo"/></svg>
+
+    <div class="relative mx-auto max-w-[1240px] px-5 sm:px-7">
+
+      <!-- header -->
+      <div class="reveal flex items-end justify-between gap-5 border-b-2 border-white/12 pb-7 mb-10 sm:mb-14">
+        <div>
+          <h2 class="menu-it text-4xl sm:text-6xl">on commande&nbsp;?</h2>
+          <p class="mt-2 text-[12px] uppercase tracking-wider text-white/45">Sur place · à emporter · en livraison</p>
+        </div>
+        <span class="poster text-[clamp(3rem,8vw,6rem)] leading-[0.7] text-tomato/25">★</span>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
+
+        <!-- LEFT : CTAs -->
+        <div class="reveal">
+          <!-- adresse -->
+          <div class="flex items-start gap-3 mb-7">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="#E63946" class="shrink-0 mt-0.5" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"/></svg>
+            <span class="poster text-2xl sm:text-3xl text-white leading-[0.95]">63 RUE MAXIME GUILLOT<br><span class="text-white/60">21300 CHENÔVE</span></span>
+          </div>
+
+          <!-- tel géant -->
+          <p class="text-[11px] uppercase tracking-[0.3em] text-white/45 mb-1">Commande directe</p>
+          <a href="tel:0956657456" class="poster block text-[clamp(2.2rem,8vw,4.5rem)] leading-none text-tomato hover:text-magenta transition-colors">09 56 65 74 56</a>
+          <a href="tel:0767471992" class="inline-block mt-2 text-[15px] font-bold text-white/70 hover:text-white transition-colors">ou 07 67 47 19 92</a>
+
+          <!-- delivery buttons — TODO: remplacer href="#" par les vraies URLs Uber Eats et Deliveroo du restaurant (à demander à la gérante) -->
+          <div class="flex flex-wrap gap-3 mt-7">
+            <a href="#" target="_blank" rel="noopener" data-todo="real-ubereats-url" class="inline-flex items-center gap-2.5 bg-tomato px-6 py-3.5 poster text-lg uppercase text-white hover:opacity-90 transition-opacity" style="border-radius:3px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 2h14l1.6 4H3.4L5 2zM4 8h16v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8zm5 3v3h6v-3H9z"/></svg>
+              Uber Eats
+            </a>
+            <a href="#" target="_blank" rel="noopener" data-todo="real-deliveroo-url" class="inline-flex items-center gap-2.5 px-6 py-3.5 poster text-lg uppercase text-white hover:opacity-90 transition-opacity" style="border-radius:3px;background:#D6306E;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 2h14l1.6 4H3.4L5 2zM4 8h16v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8zm5 3v3h6v-3H9z"/></svg>
+              Deliveroo
+            </a>
+          </div>
+          <p class="mt-4 text-[13.5px] text-white/55">Livraison <span class="line-through decoration-white/40">3,90€</span> <span class="text-white font-bold">offerte dès 20€</span> · Chenôve & alentours.</p>
+          <p class="mt-1 text-[11.5px] text-white/40 italic">Livraison possible selon la disponibilité d'un livreur.</p>
+
+          <!-- horaires -->
+          <div class="mt-7 border-t border-white/10 pt-5">
+            <p class="text-[11px] uppercase tracking-[0.3em] text-white/45 mb-1.5">Horaires</p>
+            <p class="poster text-xl text-white">LUN — DIM <span class="text-white/55 text-base">·</span> 11h-14h <span class="text-white/55 text-base">·</span> 18h-22h</p>
+            <p class="font-hand text-lg text-white/40 mt-1">(horaires à confirmer)</p>
+          </div>
+        </div>
+
+        <!-- RIGHT : map -->
+        <div class="reveal relative">
+          <span class="absolute -top-4 right-4 z-10 font-hand text-2xl text-white rotate-3 hidden sm:flex items-center gap-1">on est là
+            <svg width="34" height="30" viewBox="0 0 42 38" fill="none" class="text-tomato"><path d="M3 4c10 14 24 19 33 26" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M30 23l8 8-11 1" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <div class="overflow-hidden border-[3px]" style="border-radius:6px;border-color:#E63946;">
+            <iframe title="Carte — Crousty Bowls, 63 Rue Maxime Guillot, Chenôve" src="https://www.google.com/maps?q=63+Rue+Maxime+Guillot+21300+Chen%C3%B4ve&output=embed" width="100%" height="420" style="border:0;display:block;filter:grayscale(0.2) contrast(1.05);" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== BANDEAU LIVRAISON (2 lignes contre-sens, éditorial) ============== -->
+  <div class="relative overflow-hidden bg-indigo border-y-2 border-black/30">
+    <div class="py-2">
+      <div class="marquee-track">
+        <div class="poster flex items-center text-[17px] sm:text-[19px] uppercase tracking-wide text-white">
+          <span class="px-7">Livraison <span class="line-through decoration-2 decoration-white/55 opacity-70">3,90€</span> offerte dès 20€</span><span class="text-tomato px-2">●</span>
+          <span class="px-7">Uber Eats</span><span class="text-tomato px-2">●</span>
+          <span class="px-7">Deliveroo</span><span class="text-tomato px-2">●</span>
+          <span class="px-7">À emporter & sur place</span><span class="text-tomato px-2">●</span>
+          <span class="px-7">Chenôve & autour de Dijon</span><span class="text-tomato px-2">●</span>
+        </div>
+        <div class="poster flex items-center text-[17px] sm:text-[19px] uppercase tracking-wide text-white" aria-hidden="true">
+          <span class="px-7">Livraison <span class="line-through decoration-2 decoration-white/55 opacity-70">3,90€</span> offerte dès 20€</span><span class="text-tomato px-2">●</span>
+          <span class="px-7">Uber Eats</span><span class="text-tomato px-2">●</span>
+          <span class="px-7">Deliveroo</span><span class="text-tomato px-2">●</span>
+          <span class="px-7">À emporter & sur place</span><span class="text-tomato px-2">●</span>
+          <span class="px-7">Chenôve & autour de Dijon</span><span class="text-tomato px-2">●</span>
+        </div>
+      </div>
+    </div>
+    <div class="py-2 border-t-2 border-black/25 bg-tomato">
+      <div class="marquee-rev">
+        <div class="poster flex items-center text-[15px] sm:text-[17px] uppercase tracking-wide text-white">
+          <span class="px-6">★ Le bowl croustillant à Chenôve</span><span class="text-white/60 px-2">/</span>
+          <span class="px-6">Riz · sauce maison · tenders</span><span class="text-white/60 px-2">/</span>
+          <span class="px-6">Fait minute, à la plancha</span><span class="text-white/60 px-2">/</span>
+          <span class="px-6">63 rue Maxime Guillot · 21300</span><span class="text-white/60 px-2">/</span>
+          <span class="px-6">Ouvert 7j/7 · 11h-14h · 18h-22h</span><span class="text-white/60 px-2">/</span>
+        </div>
+        <div class="poster flex items-center text-[15px] sm:text-[17px] uppercase tracking-wide text-white" aria-hidden="true">
+          <span class="px-6">★ Le bowl croustillant à Chenôve</span><span class="text-white/60 px-2">/</span>
+          <span class="px-6">Riz · sauce maison · tenders</span><span class="text-white/60 px-2">/</span>
+          <span class="px-6">Fait minute, à la plancha</span><span class="text-white/60 px-2">/</span>
+          <span class="px-6">63 rue Maxime Guillot · 21300</span><span class="text-white/60 px-2">/</span>
+          <span class="px-6">Ouvert 7j/7 · 11h-14h · 18h-22h</span><span class="text-white/60 px-2">/</span>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- ============== 01 — LES CROUSTY ============== -->
-  <section id="crousty" class="relative pt-16 pb-20 sm:pt-24 sm:pb-28">
-    <div class="pointer-events-none absolute inset-0 halftone-i opacity-35"></div>
+  <section id="crousty" class="relative pt-16 pb-20 sm:pt-24 sm:pb-28 overflow-hidden">
+    <div class="pointer-events-none absolute inset-0 halftone-i halftone-drift opacity-35"></div>
+    <div class="section-wm" aria-hidden="true"><span class="wm-track">CROUSTY</span></div>
 
     <div class="relative mx-auto max-w-[1240px] px-5 sm:px-7">
 
       <!-- editorial section header -->
-      <div class="reveal grid lg:grid-cols-12 gap-6 items-end border-b-2 border-white/12 pb-7 mb-10 sm:mb-14">
-        <div class="lg:col-span-8 flex items-end gap-5">
+      <div class="reveal flex items-end justify-between gap-5 border-b-2 border-white/12 pb-7 mb-10 sm:mb-14">
+        <div class="flex items-end gap-5">
           <span class="poster text-[clamp(3rem,8vw,6rem)] leading-[0.7] text-white/14">01</span>
           <div>
             <h2 class="menu-it text-4xl sm:text-6xl">les crousty</h2>
-            <p class="mt-2 text-[12px] uppercase tracking-wider text-white/45">Prix avec canette 33cl · retire 1€ sans canette</p>
+            <p class="mt-2 text-[12px] uppercase tracking-wider text-white/45">Canette 33cl incluse · -1€ sans</p>
           </div>
         </div>
-        <p class="lg:col-span-4 text-[15px] leading-relaxed text-white/65">
-          La signature de la maison. Un fond de riz, la sauce maison, des tenders ultra-croustillants. À Chenôve, on mange croustillant — pas autrement.
-        </p>
       </div>
 
       <!-- mosaïque éditoriale : 1 grosse (Dynamite) + 7 variées -->
@@ -422,7 +690,6 @@
             <img src="https://placehold.co/800x1000/0A0A0F/E63946?text=CROUSTY+DYNAMITE" alt="Crousty Dynamite — riz, crevette panée, sauce dynamite, oignons crispy" loading="lazy" decoding="async" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
             <div class="absolute inset-0" style="background:linear-gradient(to top, rgba(10,10,15,.96) 8%, rgba(10,10,15,.05) 56%);"></div>
             <div class="absolute top-4 left-4 -rotate-6"><span class="stamp text-[12px]">spécialité maison</span></div>
-            <span class="absolute top-5 right-4 font-hand text-2xl text-white rotate-3 hidden sm:block">ça arrache →</span>
             <div class="absolute bottom-0 inset-x-0 p-5 sm:p-7">
               <div class="flex items-end justify-between gap-3">
                 <h3 class="poster text-3xl sm:text-5xl text-white leading-[0.88]">CROUSTY<br>DYNAMITE</h3>
@@ -512,7 +779,6 @@
               <span class="poster text-[12px] bg-tomato px-2 py-1 text-white leading-none" style="border-radius:3px;">+</span>
               <span class="text-[13px] font-bold text-white">Supplément viande <span class="text-white/55">+2,50€</span></span>
             </span>
-            <span class="font-hand text-lg text-white/45 ml-1">canette 33cl incluse · -1€ sans</span>
           </div>
         </div>
 
@@ -526,11 +792,9 @@
     <!-- rupture : filet rouge plein largeur -->
     <div class="absolute left-0 right-0 top-0 h-[3px] bg-tomato"></div>
 
-    <!-- background : halftone tomato + watermark CROUSTY géant outline -->
-    <div class="pointer-events-none absolute inset-0 halftone-t opacity-30" aria-hidden="true"></div>
-    <div class="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center justify-center overflow-hidden" aria-hidden="true">
-      <span class="wm-outline text-[28vw] sm:text-[22vw] lg:text-[18vw] leading-none whitespace-nowrap -rotate-[8deg]">POUTINE</span>
-    </div>
+    <!-- background : halftone tomato + watermark POUTINE glissant -->
+    <div class="pointer-events-none absolute inset-0 halftone-t halftone-drift opacity-30" aria-hidden="true"></div>
+    <div class="section-wm" aria-hidden="true"><span class="wm-track">POUTINE</span></div>
 
     <div class="relative mx-auto max-w-[1240px] px-5 sm:px-7">
 
@@ -605,7 +869,8 @@
 
   <!-- ============== 03 — YAKISOBA ============== -->
   <section id="yakisoba" class="relative py-16 sm:py-20 overflow-hidden border-t border-white/8 bg-ink2">
-    <div class="pointer-events-none absolute inset-0 halftone opacity-25"></div>
+    <div class="pointer-events-none absolute inset-0 halftone halftone-drift opacity-25"></div>
+    <div class="section-wm" aria-hidden="true"><span class="wm-track" style="-webkit-text-stroke-color:rgba(59,59,184,.35);">YAKISOBA</span></div>
     <div class="pointer-events-none absolute -right-24 top-1/2 -translate-y-1/2 h-[420px] w-[420px] rounded-full blur-[150px] opacity-[0.16]" style="background:radial-gradient(circle,#D6306E,transparent 70%);"></div>
 
     <div class="relative mx-auto max-w-[1240px] px-5 sm:px-7">
@@ -617,8 +882,8 @@
             <span class="poster text-[clamp(2.6rem,7vw,5rem)] leading-[0.7] text-white/14">03</span>
             <h2 class="menu-it text-4xl sm:text-6xl leading-[0.9]">les nouilles<br class="hidden sm:block"> yakisoba</h2>
           </div>
-          <p class="reveal text-[15px] sm:text-lg text-white/70 max-w-lg mb-2">
-            Nouilles sautées au wok, légumes croquants, la garniture que tu veux par-dessus. Un seul prix, tu choisis :
+          <p class="reveal text-[15px] sm:text-lg text-white/70 max-w-lg mb-5">
+            Nouilles au wok, garniture au choix.
           </p>
           <p class="reveal poster text-tomato text-4xl mb-7">9,90€</p>
           <div class="reveal flex flex-wrap gap-3">
@@ -649,22 +914,68 @@
     </div>
   </section>
 
+  <!-- ============== LA MAISON — respiration éditoriale entre menu ============== -->
+  <section id="maison" class="relative py-16 sm:py-24 overflow-hidden border-t border-white/8">
+    <div class="pointer-events-none absolute inset-0 halftone-v opacity-20" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute -left-32 top-10 h-[420px] w-[420px] rounded-full blur-[160px] opacity-[0.14]" style="background:radial-gradient(circle,#6B3FB4,transparent 70%);"></div>
+
+    <div class="relative mx-auto max-w-[1240px] px-5 sm:px-7">
+      <div class="grid lg:grid-cols-12 gap-10 items-center">
+
+        <!-- LEFT : photo lieu -->
+        <div class="reveal lg:col-span-7 relative order-2 lg:order-1">
+          <div class="relative aspect-[4/3] overflow-hidden border-[3px] border-white/12" style="border-radius:6px; box-shadow:0 40px 80px -30px rgba(0,0,0,.8);">
+            <img src="https://placehold.co/1200x900/0A0A0F/6B3FB4?text=LA+MAISON" alt="L'intérieur de Crousty Bowls à Chenôve" loading="lazy" decoding="async" class="h-full w-full object-cover" />
+          </div>
+          <!-- petit label -->
+          <div class="absolute -bottom-4 left-4 sm:left-8 rotate-[-5deg] bg-ink border-2 border-tomato px-4 py-2" style="border-radius:4px;">
+            <span class="block text-[10px] uppercase tracking-widest text-white/50 leading-none">Chenôve</span>
+            <span class="poster text-xl text-tomato leading-none">21300</span>
+          </div>
+        </div>
+
+        <!-- RIGHT : texte court -->
+        <div class="reveal lg:col-span-5 order-1 lg:order-2">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="block h-[2px] w-8 bg-tomato"></span>
+            <span class="text-[11px] font-bold uppercase tracking-[0.28em] text-white/60">La maison</span>
+          </div>
+          <h2 class="menu-it text-4xl sm:text-5xl leading-[0.95]">un comptoir, une plancha, ça craque.</h2>
+          <p class="mt-6 text-[15px] sm:text-[16px] text-white/70 leading-relaxed">
+            À Chenôve, aux portes de Dijon. On dresse le bowl devant toi, la sauce dégouline, les oignons crispy tombent en dernier.
+          </p>
+          <p class="mt-6 poster text-xl text-white leading-tight">
+            63 rue Maxime Guillot<br><span class="text-white/60 text-base">21300 Chenôve</span>
+          </p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href="tel:0956657456" class="inline-flex items-center gap-2 bg-tomato px-5 py-3 text-[13px] font-extrabold uppercase tracking-wide text-white hover:bg-magenta transition-colors" style="border-radius:3px;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              Appeler
+            </a>
+            <a href="#commander" class="inline-flex items-center gap-1.5 text-[13px] font-bold uppercase tracking-wide text-white underline decoration-tomato decoration-2 underline-offset-[6px] hover:text-tomato transition-colors">Nous trouver →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ============== 04 — LES SUSHIS ============== -->
   <section id="sushis" class="relative pt-16 pb-20 sm:pt-24 sm:pb-28 overflow-hidden border-t border-white/8">
-    <div class="pointer-events-none absolute inset-0 halftone-i opacity-20"></div>
+    <div class="pointer-events-none absolute inset-0 halftone-i halftone-drift opacity-20"></div>
+    <div class="section-wm" aria-hidden="true"><span class="wm-track" style="-webkit-text-stroke-color:rgba(214,48,110,.28);">SUSHIS</span></div>
 
     <div class="relative mx-auto max-w-[1240px] px-5 sm:px-7">
 
       <!-- header -->
-      <div class="reveal grid lg:grid-cols-12 gap-6 items-end border-b-2 border-white/12 pb-7 mb-14 sm:mb-20">
-        <div class="lg:col-span-8 flex items-end gap-5">
+      <div class="reveal flex items-end justify-between gap-5 border-b-2 border-white/12 pb-7 mb-14 sm:mb-20">
+        <div class="flex items-end gap-5">
           <span class="poster text-[clamp(3rem,8vw,6rem)] leading-[0.7] text-white/14">04</span>
           <div>
             <h2 class="menu-it text-4xl sm:text-6xl">les sushis</h2>
-            <p class="mt-2 text-[12px] uppercase tracking-wider text-white/45">2 accompagnements systématiques : riz + chou</p>
+            <p class="mt-2 text-[12px] uppercase tracking-wider text-white/45">Riz + chou inclus</p>
           </div>
         </div>
-        <p class="lg:col-span-4 text-[15px] leading-relaxed text-white/65">Trois plateaux, trois niveaux de gourmandise. Roulés frais, tu choisis ton camp.</p>
       </div>
 
       <!-- 3 plateaux façon carte des vins -->
@@ -728,7 +1039,7 @@
       <div class="reveal flex items-end justify-between gap-5 border-b-2 border-white/12 pb-7 mb-9 sm:mb-12">
         <div>
           <h2 class="menu-it text-4xl sm:text-6xl">les entrées</h2>
-          <p class="mt-2 text-[12px] uppercase tracking-wider text-white/45">L'ardoise à grignoter — sur place, à emporter, à partager</p>
+          <p class="mt-2 text-[12px] uppercase tracking-wider text-white/45">À grignoter, à partager</p>
         </div>
         <span class="poster text-[clamp(3rem,8vw,6rem)] leading-[0.7] text-white/14">05</span>
       </div>
@@ -902,76 +1213,6 @@
     </div>
   </section>
 
-  <!-- ============== 07 — COMMANDER / TROUVER ============== -->
-  <section id="commander" class="relative pt-16 pb-20 sm:pt-24 sm:pb-28 overflow-hidden border-t border-white/8 bg-ink2">
-    <div class="absolute left-0 right-0 top-0 h-[3px] bg-tomato"></div>
-
-    <!-- background : halftone indigo + watermark logo CB en haut-gauche -->
-    <div class="pointer-events-none absolute inset-0 halftone-i opacity-20" aria-hidden="true"></div>
-    <svg class="pointer-events-none absolute -left-20 -top-24 h-[360px] w-[360px] opacity-[0.05] hidden md:block" aria-hidden="true"><use href="#cb-logo"/></svg>
-
-    <div class="relative mx-auto max-w-[1240px] px-5 sm:px-7">
-
-      <!-- header -->
-      <div class="reveal flex items-end justify-between gap-5 border-b-2 border-white/12 pb-7 mb-10 sm:mb-14">
-        <div>
-          <h2 class="menu-it text-4xl sm:text-6xl">on commande ?</h2>
-          <p class="mt-2 text-[12px] uppercase tracking-wider text-white/45">Sur place · à emporter · en livraison</p>
-        </div>
-        <span class="poster text-[clamp(3rem,8vw,6rem)] leading-[0.7] text-white/14">07</span>
-      </div>
-
-      <div class="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
-
-        <!-- LEFT : CTAs -->
-        <div class="reveal">
-          <!-- adresse -->
-          <div class="flex items-start gap-3 mb-7">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="#E63946" class="shrink-0 mt-0.5" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"/></svg>
-            <span class="poster text-2xl sm:text-3xl text-white leading-[0.95]">63 RUE MAXIME GUILLOT<br><span class="text-white/60">21300 CHENÔVE</span></span>
-          </div>
-
-          <!-- tel géant -->
-          <p class="text-[11px] uppercase tracking-[0.3em] text-white/45 mb-1">Commande directe</p>
-          <a href="tel:0956657456" class="poster block text-[clamp(2.2rem,8vw,4.5rem)] leading-none text-tomato hover:text-magenta transition-colors">09 56 65 74 56</a>
-          <a href="tel:0767471992" class="inline-block mt-2 text-[15px] font-bold text-white/70 hover:text-white transition-colors">ou 07 67 47 19 92</a>
-
-          <!-- delivery buttons — TODO: remplacer href="#" par les vraies URLs Uber Eats et Deliveroo du restaurant (à demander à la gérante) -->
-          <div class="flex flex-wrap gap-3 mt-7">
-            <a href="#" target="_blank" rel="noopener" data-todo="real-ubereats-url" class="inline-flex items-center gap-2.5 bg-tomato px-6 py-3.5 poster text-lg uppercase text-white hover:opacity-90 transition-opacity" style="border-radius:3px;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 2h14l1.6 4H3.4L5 2zM4 8h16v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8zm5 3v3h6v-3H9z"/></svg>
-              Uber Eats
-            </a>
-            <a href="#" target="_blank" rel="noopener" data-todo="real-deliveroo-url" class="inline-flex items-center gap-2.5 px-6 py-3.5 poster text-lg uppercase text-white hover:opacity-90 transition-opacity" style="border-radius:3px;background:#D6306E;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 2h14l1.6 4H3.4L5 2zM4 8h16v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8zm5 3v3h6v-3H9z"/></svg>
-              Deliveroo
-            </a>
-          </div>
-          <p class="mt-4 text-[13.5px] text-white/55">Livraison <span class="line-through decoration-white/40">3,90€</span> <span class="text-white font-bold">offerte dès 20€</span> · Chenôve & alentours.</p>
-          <p class="mt-1 text-[11.5px] text-white/40 italic">Livraison possible selon la disponibilité d'un livreur.</p>
-
-          <!-- horaires -->
-          <div class="mt-7 border-t border-white/10 pt-5">
-            <p class="text-[11px] uppercase tracking-[0.3em] text-white/45 mb-1.5">Horaires</p>
-            <p class="poster text-xl text-white">LUN — DIM <span class="text-white/55 text-base">·</span> 11h-14h <span class="text-white/55 text-base">·</span> 18h-22h</p>
-            <p class="font-hand text-lg text-white/40 mt-1">(horaires à confirmer)</p>
-          </div>
-        </div>
-
-        <!-- RIGHT : map -->
-        <div class="reveal relative">
-          <span class="absolute -top-4 right-4 z-10 font-hand text-2xl text-white rotate-3 hidden sm:flex items-center gap-1">on est là
-            <svg width="34" height="30" viewBox="0 0 42 38" fill="none" class="text-tomato"><path d="M3 4c10 14 24 19 33 26" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M30 23l8 8-11 1" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
-          <div class="overflow-hidden border-[3px]" style="border-radius:6px;border-color:#E63946;">
-            <iframe title="Carte — Crousty Bowls, 63 Rue Maxime Guillot, Chenôve" src="https://www.google.com/maps?q=63+Rue+Maxime+Guillot+21300+Chen%C3%B4ve&output=embed" width="100%" height="420" style="border:0;display:block;filter:grayscale(0.2) contrast(1.05);" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
   <!-- ============== FOOTER ============== -->
   <footer class="relative border-t-2 border-white/10 bg-ink">
     <div class="mx-auto max-w-[1240px] px-5 sm:px-7 py-12 sm:py-14">
@@ -1022,33 +1263,259 @@
   <!-- ============== SCRIPTS ============== -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
   <script>
-    // Mobile menu
+    // ==================== MOBILE MENU ====================
     const burger=document.getElementById('burger'), menu=document.getElementById('mobileMenu'),
           iOpen=document.getElementById('burger-open'), iClose=document.getElementById('burger-close');
     function closeMenu(){ menu.classList.remove('open'); iOpen.classList.remove('hidden'); iClose.classList.add('hidden'); }
     burger.addEventListener('click',()=>{ const o=menu.classList.toggle('open'); iOpen.classList.toggle('hidden',o); iClose.classList.toggle('hidden',!o); });
     document.querySelectorAll('.mobmenu-link').forEach(a=>a.addEventListener('click',closeMenu));
 
-    // Reveals via manual scroll check (reliable everywhere), parallax via GSAP
-    function initAnims(){
-      const reveals=Array.from(document.querySelectorAll('.reveal'));
-      function show(el){ el.style.setProperty('opacity','1','important'); el.style.setProperty('transform','none','important'); el.dataset.shown='1'; }
-      function check(){ const vh=window.innerHeight||document.documentElement.clientHeight;
-        for(const el of reveals){ if(el.dataset.shown) continue; const r=el.getBoundingClientRect(); if(r.top<vh*0.92 && r.bottom>0) show(el); } }
+    const REDUCED = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    const HOVER   = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+
+    // ==================== SPLIT TEXT (home-made, chars) ====================
+    function splitChars(){
+      document.querySelectorAll('[data-split]').forEach(el=>{
+        const txt = el.getAttribute('data-split') || el.textContent;
+        el.textContent='';
+        [...txt].forEach((c,i)=>{
+          const s=document.createElement('span');
+          s.className='char'; s.textContent = c===' '?' ':c;
+          s.style.transitionDelay = (i*35)+'ms';
+          el.appendChild(s);
+        });
+      });
+    }
+
+    // ==================== LENIS SMOOTH SCROLL (desktop only) ====================
+    let lenis;
+    function initLenis(){
+      if(REDUCED || !window.Lenis) return;
+      lenis = new Lenis({ duration:1.15, easing:t=>Math.min(1,1.001-Math.pow(2,-10*t)), smoothWheel:true, smoothTouch:false });
+      function raf(t){ lenis.raf(t); requestAnimationFrame(raf); }
+      requestAnimationFrame(raf);
+      if(typeof gsap!=='undefined' && gsap.ticker){
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add(t=>lenis.raf(t*1000));
+        gsap.ticker.lagSmoothing(0);
+      }
+    }
+
+    // ==================== REVEAL + CLIP-IN + SECTION WM + CHAR-REVEAL ====================
+    function initReveals(){
+      const reveals = Array.from(document.querySelectorAll('.reveal'));
+      const clips   = Array.from(document.querySelectorAll('.clip-in'));
+      const wms     = Array.from(document.querySelectorAll('.section-wm'));
+      const charReveals = Array.from(document.querySelectorAll('.char-reveal'));
+
+      function show(el){
+        el.style.setProperty('opacity','1','important');
+        el.style.setProperty('transform','none','important');
+        el.dataset.shown='1';
+      }
+      function showClip(el){ el.classList.add('shown'); el.dataset.shown='1'; }
+      function showChars(el){
+        el.querySelectorAll('.char').forEach(c=>{ c.style.opacity=1; c.style.transform='translateY(0) rotate(0)'; c.style.transition='opacity .5s ease, transform .8s cubic-bezier(.2,.9,.3,1.05)'; });
+        el.dataset.shown='1';
+      }
+      function check(){
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        for(const el of reveals){ if(el.dataset.shown) continue; const r=el.getBoundingClientRect(); if(r.top<vh*0.92 && r.bottom>0) show(el); }
+        for(const el of clips){ if(el.dataset.shown) continue; const r=el.getBoundingClientRect(); if(r.top<vh*0.88 && r.bottom>0) showClip(el); }
+        for(const el of charReveals){ if(el.dataset.shown) continue; const r=el.getBoundingClientRect(); if(r.top<vh*0.95 && r.bottom>0) showChars(el); }
+        for(const el of wms){
+          const r=el.getBoundingClientRect(); const active = r.top<vh*0.6 && r.bottom>vh*0.1;
+          el.classList.toggle('on', active);
+        }
+      }
       check();
       window.addEventListener('scroll',check,{passive:true});
       window.addEventListener('resize',check);
-      setTimeout(()=>reveals.forEach(el=>{ if(!el.dataset.shown) show(el); }),2500);
-
-      if(typeof gsap!=='undefined'){
-        gsap.registerPlugin(ScrollTrigger);
-        gsap.utils.toArray('[data-parallax]').forEach(el=>{
-          gsap.to(el,{ yPercent:-7, ease:'none', scrollTrigger:{ trigger:el, start:'top bottom', end:'bottom top', scrub:true } });
-        });
-      }
+      setTimeout(()=>{ reveals.forEach(el=>{ if(!el.dataset.shown) show(el); }); charReveals.forEach(el=>{ if(!el.dataset.shown) showChars(el); }); clips.forEach(el=>{ if(!el.dataset.shown) showClip(el); }); }, 3000);
     }
-    (document.readyState==='complete'||document.readyState==='interactive') ? initAnims() : document.addEventListener('DOMContentLoaded',initAnims);
+
+    // ==================== PARALLAX MULTI-LAYER ====================
+    function initParallax(){
+      if(REDUCED || typeof gsap==='undefined') return;
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.utils.toArray('[data-parallax]').forEach(el=>{
+        const speed = parseFloat(el.getAttribute('data-speed') || '-7');
+        gsap.to(el,{ yPercent:speed, ease:'none', scrollTrigger:{ trigger:el, start:'top bottom', end:'bottom top', scrub:true } });
+      });
+      // Blobs floating parallax
+      gsap.utils.toArray('.blob').forEach((el,i)=>{
+        gsap.to(el,{ yPercent:(i%2===0?-25:-15), xPercent:(i%2===0?8:-6), ease:'none', scrollTrigger:{ trigger:el.closest('section')||el, start:'top bottom', end:'bottom top', scrub:true } });
+      });
+    }
+
+    // ==================== POSTER-CARD 3D TILT (desktop) ====================
+    function initTilt(){
+      if(!HOVER || REDUCED) return;
+      document.querySelectorAll('.poster-card').forEach(card=>{
+        const inner = card.querySelector('.poster-inner'); if(!inner) return;
+        card.addEventListener('mousemove',e=>{
+          const r = card.getBoundingClientRect();
+          const px = (e.clientX-r.left)/r.width - .5;
+          const py = (e.clientY-r.top)/r.height - .5;
+          inner.style.transform = `rotateX(${(-py*8).toFixed(2)}deg) rotateY(${(px*10).toFixed(2)}deg) translateZ(0)`;
+        });
+        card.addEventListener('mouseleave',()=>{ inner.style.transform=''; });
+      });
+    }
+
+    // ==================== FLIP PRICES ON REVEAL ====================
+    function initFlipPrices(){
+      // rien à ajouter, l'animation CSS se joue au load naturellement pour les .flip-price déjà visibles.
+      // On peut trigger flip pour ceux qui rentrent : simple ScrollTrigger reset+play.
+      if(REDUCED || typeof gsap==='undefined') return;
+      gsap.utils.toArray('.flip-price').forEach(el=>{
+        gsap.set(el,{ rotateX:-90, opacity:0 });
+        ScrollTrigger.create({ trigger:el, start:'top 90%', once:true, onEnter:()=> gsap.to(el,{ rotateX:0, opacity:1, duration:.7, ease:'back.out(1.6)' }) });
+      });
+    }
+
+    // ==================== HERO 3D (Three.js) : anneau CB rotatif + particules ====================
+    function initHero3D(){
+      if(REDUCED) return;
+      const canvas = document.getElementById('hero-3d');
+      if(!canvas || !window.THREE) return;
+      // Feature detect WebGL
+      try{ const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl'); if(!gl){ canvas.remove(); return; } }
+      catch(e){ canvas.remove(); return; }
+
+      const isMobile = window.innerWidth < 768;
+      const scene = new THREE.Scene();
+      const parent = canvas.parentElement;
+      const getSize = ()=>({ w: parent.clientWidth, h: parent.clientHeight });
+      let { w, h } = getSize();
+
+      const camera = new THREE.PerspectiveCamera(45, w/h, 0.1, 100);
+      camera.position.set(0, 0, isMobile ? 5.6 : 6.2);
+
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:!isMobile, powerPreference:'high-performance' });
+      renderer.setPixelRatio(Math.min(isMobile?1.5:2, window.devicePixelRatio||1));
+      renderer.setSize(w, h, false);
+      renderer.setClearColor(0x000000, 0);
+
+      // === LIGHTS : ambient warm + rim light ===
+      scene.add(new THREE.AmbientLight(0x241222, 0.7));
+      const key = new THREE.PointLight(0xE63946, 2.8, 20);
+      key.position.set(2.5, 3, 4);
+      scene.add(key);
+      const rim = new THREE.PointLight(0x3B3BB8, 2.2, 20);
+      rim.position.set(-3, -2, 3);
+      scene.add(rim);
+      const fill = new THREE.PointLight(0xD6306E, 1.4, 20);
+      fill.position.set(0, -3, 5);
+      scene.add(fill);
+
+      // === ANNEAU CB : 6 arcs colorés (rappel logo) — chaque arc = TorusGeometry en secteur ===
+      const ringGroup = new THREE.Group();
+      const arcColors = [0xE63946, 0xD6306E, 0x6B3FB4, 0x3B3BB8, 0x7B2F94, 0xD6306E];
+      const R = 1.85, tube = 0.28;
+      arcColors.forEach((col,i)=>{
+        const start = (i/6) * Math.PI*2;
+        const geom = new THREE.TorusGeometry(R, tube, 24, 22, Math.PI*2/6);
+        const mat = new THREE.MeshStandardMaterial({
+          color: col, roughness:0.28, metalness:0.55,
+          emissive: col, emissiveIntensity:0.18,
+        });
+        const mesh = new THREE.Mesh(geom, mat);
+        mesh.rotation.z = start;
+        ringGroup.add(mesh);
+      });
+      ringGroup.rotation.x = -0.35;
+      ringGroup.rotation.y = 0.5;
+      scene.add(ringGroup);
+
+      // === PARTICULES : chapelure / poudre croustillante ===
+      const PARTS = isMobile ? 45 : 90;
+      const pGeom = new THREE.BufferGeometry();
+      const positions = new Float32Array(PARTS * 3);
+      const speeds = new Float32Array(PARTS);
+      for(let i=0;i<PARTS;i++){
+        positions[i*3+0] = (Math.random()-.5) * 9;
+        positions[i*3+1] = (Math.random()-.5) * 6;
+        positions[i*3+2] = (Math.random()-.5) * 3 - 1;
+        speeds[i] = 0.001 + Math.random()*0.003;
+      }
+      pGeom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      const pMat = new THREE.PointsMaterial({ color: 0xF7EBD5, size: 0.045, transparent:true, opacity:0.55, sizeAttenuation:true, depthWrite:false });
+      const particles = new THREE.Points(pGeom, pMat);
+      scene.add(particles);
+
+      // === RESPONSIVE SCALE : anneau s'adapte au plus petit côté visible ===
+      function applyResponsiveScale(){
+        // On veut que l'anneau (rayon world ≈ R+tube = 2.13) tienne à ~55% du plus petit côté visible
+        const minSide = Math.min(w, h);
+        const target = minSide < 400 ? 0.62 : minSide < 640 ? 0.75 : minSide < 900 ? 0.92 : 1.05;
+        ringGroup.scale.setScalar(target);
+        // Camera plus près sur portrait étroit, plus loin sur wide
+        const aspect = w/h;
+        camera.position.z = aspect < 0.75 ? 5.2 : aspect < 1.1 ? 5.8 : 6.4;
+      }
+      function onResize(){
+        const s = getSize();
+        w = s.w; h = s.h;
+        camera.aspect = w/h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h, false);
+        applyResponsiveScale();
+      }
+      window.addEventListener('resize', onResize);
+      window.addEventListener('orientationchange', onResize);
+      applyResponsiveScale();
+
+      // === SCROLL RESPONSE ===
+      let scrollY = 0;
+      window.addEventListener('scroll', ()=>{ scrollY = window.scrollY || 0; }, {passive:true});
+
+      // === VISIBILITY : pause when hero out of view (save battery) ===
+      let heroVisible = true;
+      const io = new IntersectionObserver(entries=>{ heroVisible = entries[0].isIntersecting; }, { threshold:0.02 });
+      io.observe(canvas.parentElement);
+
+      // === LOOP ===
+      const clock = new THREE.Clock();
+      function tick(){
+        const t = clock.getElapsedTime();
+        if(heroVisible){
+          // Anneau tourne lentement + oscillation
+          ringGroup.rotation.z = t * 0.18 + scrollY * 0.0009;
+          ringGroup.rotation.x = -0.35 + Math.sin(t*0.4) * 0.08;
+          ringGroup.rotation.y = 0.5 + Math.cos(t*0.35) * 0.1 - scrollY * 0.0004;
+          // Particules dérivent lentement
+          const pos = particles.geometry.attributes.position.array;
+          for(let i=0;i<PARTS;i++){
+            pos[i*3+1] += speeds[i];
+            if(pos[i*3+1] > 3.5){ pos[i*3+1] = -3.5; pos[i*3+0] = (Math.random()-.5)*9; }
+          }
+          particles.geometry.attributes.position.needsUpdate = true;
+          particles.rotation.z = t * 0.02;
+          // Léger sway lights
+          key.position.x = 2.5 + Math.sin(t*0.6)*0.6;
+          rim.position.y = -2 + Math.cos(t*0.5)*0.5;
+          renderer.render(scene, camera);
+        }
+        requestAnimationFrame(tick);
+      }
+      tick();
+    }
+
+    // ==================== BOOT ====================
+    function boot(){
+      splitChars();
+      initLenis();
+      initReveals();
+      initParallax();
+      initTilt();
+      initFlipPrices();
+      initHero3D();
+    }
+    (document.readyState==='complete'||document.readyState==='interactive') ? boot() : document.addEventListener('DOMContentLoaded',boot);
   </script>
 </body>
 </html>
