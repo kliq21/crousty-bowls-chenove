@@ -44,7 +44,7 @@
     "paymentAccepted": ["Cash", "Credit Card"],
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "63 Rue Maxime Guillot",
+      "streetAddress": "68 Rue Maxime Guillot",
       "addressLocality": "Chenôve",
       "postalCode": "21300",
       "addressRegion": "Côte-d'Or",
@@ -56,8 +56,10 @@
       "longitude": "5.013226238306135"
     },
     "openingHoursSpecification": [
-      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"], "opens": "11:00", "closes": "14:00" },
-      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"], "opens": "18:00", "closes": "22:00" }
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday"], "opens": "11:00", "closes": "14:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday"], "opens": "18:00", "closes": "22:30" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday","Saturday"], "opens": "11:00", "closes": "23:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "18:00", "closes": "23:00" }
     ],
     "hasMenu": {
       "@type": "Menu",
@@ -571,7 +573,7 @@
           <!-- adresse -->
           <div class="flex items-start gap-3 mb-7">
             <svg width="26" height="26" viewBox="0 0 24 24" fill="#E63946" class="shrink-0 mt-0.5" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"/></svg>
-            <span class="poster text-2xl sm:text-3xl text-white leading-[0.95]">63 RUE MAXIME GUILLOT<br><span class="text-white/60">21300 CHENÔVE</span></span>
+            <span class="poster text-2xl sm:text-3xl text-white leading-[0.95]">68 RUE MAXIME GUILLOT<br><span class="text-white/60">21300 CHENÔVE</span></span>
           </div>
 
           <!-- tel géant -->
@@ -579,15 +581,11 @@
           <a href="tel:0956657456" class="poster block text-[clamp(2.2rem,8vw,4.5rem)] leading-none text-tomato hover:text-magenta transition-colors">09 56 65 74 56</a>
           <a href="tel:0767471992" class="inline-block mt-2 text-[15px] font-bold text-white/70 hover:text-white transition-colors">ou 07 67 47 19 92</a>
 
-          <!-- delivery buttons — TODO: remplacer href="#" par les vraies URLs Uber Eats et Deliveroo du restaurant (à demander à la gérante) -->
+          <!-- delivery button -->
           <div class="flex flex-wrap gap-3 mt-7">
-            <a href="#" target="_blank" rel="noopener noreferrer" data-todo="real-ubereats-url" class="inline-flex items-center gap-2.5 bg-tomato px-6 py-3.5 poster text-lg uppercase text-white hover:opacity-90 transition-opacity" style="border-radius:3px;">
+            <a href="https://www.ubereats.com/fr/store/crousty-bowls-sushi/_WKlhVXBVMOhJY4WHohnWg" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2.5 bg-tomato px-6 py-3.5 poster text-lg uppercase text-white hover:opacity-90 transition-opacity" style="border-radius:3px;">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 2h14l1.6 4H3.4L5 2zM4 8h16v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8zm5 3v3h6v-3H9z"/></svg>
-              Uber Eats
-            </a>
-            <a href="#" target="_blank" rel="noopener noreferrer" data-todo="real-deliveroo-url" class="inline-flex items-center gap-2.5 px-6 py-3.5 poster text-lg uppercase text-white hover:opacity-90 transition-opacity" style="border-radius:3px;background:#D6306E;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 2h14l1.6 4H3.4L5 2zM4 8h16v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8zm5 3v3h6v-3H9z"/></svg>
-              Deliveroo
+              Commander sur Uber Eats
             </a>
           </div>
           <p class="mt-4 text-[13.5px] text-white/55">Livraison <span class="line-through decoration-white/40">3,90€</span> <span class="text-white font-bold">offerte dès 20€</span> · Chenôve & alentours.</p>
@@ -595,9 +593,13 @@
 
           <!-- horaires -->
           <div class="mt-7 border-t border-white/10 pt-5">
-            <p class="text-[11px] uppercase tracking-[0.3em] text-white/45 mb-1.5">Horaires</p>
-            <p class="poster text-xl text-white">LUN — DIM <span class="text-white/55 text-base">·</span> 11h-14h <span class="text-white/55 text-base">·</span> 18h-22h</p>
-            <p class="font-hand text-lg text-white/40 mt-1">(horaires à confirmer)</p>
+            <p class="text-[11px] uppercase tracking-[0.3em] text-white/45 mb-3">Horaires</p>
+            <dl class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 poster text-base sm:text-lg text-white">
+              <dt class="text-white/55">Lun — Jeu</dt><dd>11h-14h · 18h-22h30</dd>
+              <dt class="text-white/55">Vendredi</dt><dd>11h-23h <span class="text-white/55 text-sm">(non-stop)</span></dd>
+              <dt class="text-white/55">Samedi</dt><dd>11h-23h <span class="text-white/55 text-sm">(non-stop)</span></dd>
+              <dt class="text-white/55">Dimanche</dt><dd>18h-23h</dd>
+            </dl>
           </div>
         </div>
 
@@ -607,7 +609,7 @@
             <svg width="34" height="30" viewBox="0 0 42 38" fill="none" class="text-tomato"><path d="M3 4c10 14 24 19 33 26" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M30 23l8 8-11 1" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </span>
           <div class="overflow-hidden border-[3px]" style="border-radius:6px;border-color:#E63946;">
-            <iframe title="Carte — Crousty Bowls, 63 Rue Maxime Guillot, Chenôve" src="https://www.google.com/maps?q=63+Rue+Maxime+Guillot+21300+Chen%C3%B4ve&output=embed" width="100%" height="420" style="border:0;display:block;filter:grayscale(0.2) contrast(1.05);" loading="lazy" referrerpolicy="no-referrer"></iframe>
+            <iframe title="Carte — Crousty Bowls, 68 Rue Maxime Guillot, Chenôve" src="https://www.google.com/maps?q=68+Rue+Maxime+Guillot+21300+Chen%C3%B4ve&output=embed" width="100%" height="420" style="border:0;display:block;filter:grayscale(0.2) contrast(1.05);" loading="lazy" referrerpolicy="no-referrer"></iframe>
           </div>
         </div>
 
@@ -622,14 +624,12 @@
         <div class="poster flex items-center text-[17px] sm:text-[19px] uppercase tracking-wide text-white">
           <span class="px-7">Livraison <span class="line-through decoration-2 decoration-white/55 opacity-70">3,90€</span> offerte dès 20€</span><span class="text-tomato px-2">●</span>
           <span class="px-7">Uber Eats</span><span class="text-tomato px-2">●</span>
-          <span class="px-7">Deliveroo</span><span class="text-tomato px-2">●</span>
           <span class="px-7">À emporter & sur place</span><span class="text-tomato px-2">●</span>
           <span class="px-7">Chenôve & autour de Dijon</span><span class="text-tomato px-2">●</span>
         </div>
         <div class="poster flex items-center text-[17px] sm:text-[19px] uppercase tracking-wide text-white" aria-hidden="true">
           <span class="px-7">Livraison <span class="line-through decoration-2 decoration-white/55 opacity-70">3,90€</span> offerte dès 20€</span><span class="text-tomato px-2">●</span>
           <span class="px-7">Uber Eats</span><span class="text-tomato px-2">●</span>
-          <span class="px-7">Deliveroo</span><span class="text-tomato px-2">●</span>
           <span class="px-7">À emporter & sur place</span><span class="text-tomato px-2">●</span>
           <span class="px-7">Chenôve & autour de Dijon</span><span class="text-tomato px-2">●</span>
         </div>
@@ -641,15 +641,15 @@
           <span class="px-6">★ Le bowl croustillant à Chenôve</span><span class="text-white/60 px-2">/</span>
           <span class="px-6">Riz · sauce maison · tenders</span><span class="text-white/60 px-2">/</span>
           <span class="px-6">Fait minute, à la plancha</span><span class="text-white/60 px-2">/</span>
-          <span class="px-6">63 rue Maxime Guillot · 21300</span><span class="text-white/60 px-2">/</span>
-          <span class="px-6">Ouvert 7j/7 · 11h-14h · 18h-22h</span><span class="text-white/60 px-2">/</span>
+          <span class="px-6">68 rue Maxime Guillot · 21300</span><span class="text-white/60 px-2">/</span>
+          <span class="px-6">Ouvert 7j/7 · midi & soir</span><span class="text-white/60 px-2">/</span>
         </div>
         <div class="poster flex items-center text-[15px] sm:text-[17px] uppercase tracking-wide text-white" aria-hidden="true">
           <span class="px-6">★ Le bowl croustillant à Chenôve</span><span class="text-white/60 px-2">/</span>
           <span class="px-6">Riz · sauce maison · tenders</span><span class="text-white/60 px-2">/</span>
           <span class="px-6">Fait minute, à la plancha</span><span class="text-white/60 px-2">/</span>
-          <span class="px-6">63 rue Maxime Guillot · 21300</span><span class="text-white/60 px-2">/</span>
-          <span class="px-6">Ouvert 7j/7 · 11h-14h · 18h-22h</span><span class="text-white/60 px-2">/</span>
+          <span class="px-6">68 rue Maxime Guillot · 21300</span><span class="text-white/60 px-2">/</span>
+          <span class="px-6">Ouvert 7j/7 · midi & soir</span><span class="text-white/60 px-2">/</span>
         </div>
       </div>
     </div>
@@ -871,7 +871,7 @@
             <div class="col-span-2 relative aspect-[4/3] overflow-hidden border-[3px] border-white/12" style="border-radius:6px; box-shadow:0 40px 80px -30px rgba(0,0,0,.8);">
               <picture>
                 <source type="image/webp" srcset="/assets/img/lieu/facade-480.webp 480w, /assets/img/lieu/facade-960.webp 960w, /assets/img/lieu/facade-1600.webp 1600w" sizes="(max-width:900px) 60vw, 40vw" />
-                <img src="/assets/img/lieu/facade.jpg" alt="Façade de Crousty Bowls, 63 rue Maxime Guillot à Chenôve" loading="lazy" decoding="async" class="h-full w-full object-cover" />
+                <img src="/assets/img/lieu/facade.jpg" alt="Façade de Crousty Bowls, 68 rue Maxime Guillot à Chenôve" loading="lazy" decoding="async" class="h-full w-full object-cover" />
               </picture>
             </div>
             <!-- Panneau ville (1/3) -->
@@ -895,7 +895,7 @@
             À Chenôve, aux portes de Dijon. On dresse le bowl devant toi, la sauce dégouline, les oignons crispy tombent en dernier.
           </p>
           <p class="mt-6 poster text-xl text-white leading-tight">
-            63 rue Maxime Guillot<br><span class="text-white/60 text-base">21300 Chenôve</span>
+            68 rue Maxime Guillot<br><span class="text-white/60 text-base">21300 Chenôve</span>
           </p>
           <div class="mt-6 flex flex-wrap gap-3">
             <a href="tel:0956657456" class="inline-flex items-center gap-2 bg-tomato px-5 py-3 text-[13px] font-extrabold uppercase tracking-wide text-white hover:bg-magenta transition-colors" style="border-radius:3px;">
@@ -943,7 +943,7 @@
             <!-- tampon oblique -->
             <div class="absolute bottom-3 left-3 rotate-[-5deg] bg-ink border-2 border-tomato px-3 py-1.5" style="border-radius:4px;">
               <span class="block text-[9px] uppercase tracking-widest text-white/50 leading-none">jusqu'à</span>
-              <span class="poster text-2xl text-tomato leading-none">25 pers.</span>
+              <span class="poster text-2xl text-tomato leading-none">30 pers.</span>
             </div>
           </figure>
 
@@ -976,7 +976,7 @@
           <dl class="mt-8 grid grid-cols-2 gap-x-6 gap-y-5">
             <div>
               <dt class="text-[10px] font-bold uppercase tracking-[0.2em] text-white/45">Capacité</dt>
-              <dd class="mt-1 menu-it text-lg text-white leading-tight">≈ 25 pers. assises</dd>
+              <dd class="mt-1 menu-it text-lg text-white leading-tight">30 pers. assises</dd>
             </div>
             <div>
               <dt class="text-[10px] font-bold uppercase tracking-[0.2em] text-white/45">Espace</dt>
@@ -1307,24 +1307,22 @@
               <li><a href="#commander" class="hover:text-white transition-colors">Commander</a></li>
               <li><a href="#salle" class="hover:text-white transition-colors">Privatiser la salle</a></li>
               <li><a href="tel:0956657456" class="hover:text-white transition-colors">09 56 65 74 56</a></li>
-              <li>63 Rue Maxime Guillot, Chenôve</li>
-              <li><a href="#" class="hover:text-white transition-colors">Mentions légales</a></li>
+              <li>68 Rue Maxime Guillot, Chenôve</li>
+              <li><a href="/mentions-legales.html" class="hover:text-white transition-colors">Mentions légales</a></li>
             </ul>
           </div>
         </div>
       </div>
 
-      <div class="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-[12.5px] text-white/40">
+      <div class="mt-12 pt-6 border-t border-white/10 flex items-center justify-center text-[12.5px] text-white/40">
         <span>© 2026 Crousty Bowls Chenôve. Tous droits réservés.</span>
-        <a href="https://kliqweb.fr" target="_blank" rel="noopener noreferrer" class="hover:text-white/70 transition-colors">Site par Kliq</a>
       </div>
     </div>
   </footer>
 
   <!-- ============== SCRIPTS ============== -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js" integrity="sha384-O55L/6rhHr9CFvrxqv5luxOCcmVaBmETbZbJDP+Do8T0pztTACsFBD/IXCNkj7DV" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script>
     // ==================== CUTOUT SCROLL (Three.js) ====================
     window.addEventListener('load', () => {
@@ -1380,19 +1378,10 @@
       });
     }
 
-    // ==================== LENIS SMOOTH SCROLL (desktop only) ====================
-    let lenis;
-    function initLenis(){
-      if(REDUCED || !window.Lenis) return;
-      lenis = new Lenis({ duration:1.15, easing:t=>Math.min(1,1.001-Math.pow(2,-10*t)), smoothWheel:true, smoothTouch:false });
-      function raf(t){ lenis.raf(t); requestAnimationFrame(raf); }
-      requestAnimationFrame(raf);
-      if(typeof gsap!=='undefined' && gsap.ticker){
-        lenis.on('scroll', ScrollTrigger.update);
-        gsap.ticker.add(t=>lenis.raf(t*1000));
-        gsap.ticker.lagSmoothing(0);
-      }
-    }
+    // ==================== SCROLL NATIF (Lenis désactivé) ====================
+    // On laisse le scroll natif du navigateur — smooth par défaut sur Chrome/Edge/Firefox,
+    // inertie native sur mobile. ScrollTrigger + reveals fonctionnent avec le scroll natif.
+    function initLenis(){ /* no-op */ }
 
     // ==================== REVEAL + CLIP-IN + SECTION WM + CHAR-REVEAL ====================
     function initReveals(){
